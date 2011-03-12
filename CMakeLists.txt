@@ -23,17 +23,26 @@ add_library(
     dicpp/lib/src/type_provider.cpp
 )
 
+add_library(
+    gscore STATIC
+    gs/Script.cpp
+    gs/ScriptParser.cpp
+)
+
 add_executable(
     gamescriptut
     gs/test/unit/main.cpp
     gs/test/GoogleTestController.cpp
+    gs/test/unit/Script.cpp
+    gs/test/unit/ScriptParser.cpp
 )
 
 add_executable(
     gamescriptat
     gs/test/acceptance/main.cpp
     gs/test/GoogleTestController.cpp
+    gs/test/acceptance/calls.cpp
 )
 
-target_link_libraries(gamescriptut gmock dicpp pthread)
-target_link_libraries(gamescriptat gmock dicpp pthread)
+target_link_libraries(gamescriptut gscore gmock dicpp pthread)
+target_link_libraries(gamescriptat gscore gmock dicpp pthread)
