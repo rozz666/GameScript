@@ -10,22 +10,12 @@
 #include <gs/Registry.hpp>
 #include <gs/ScriptParser.hpp>
 #include <gs/null.hpp>
+#include <gs/test/unit/ObjectMock.hpp>
 #include <fstream>
 #include <iterator>
 #include <algorithm>
 #include <gmock/gmock.h>
 using namespace testing;
-
-struct ObjectMock : gs::Object
-{
-    virtual void registerMethods(gs::Registry& r)
-    {
-        r.method0(&ObjectMock::testMethod1, "testMethod1");
-    }
-
-    MOCK_METHOD0(testMethod1, gs::ObjectRef());
-    MOCK_METHOD2(testMethod2, gs::ObjectRef(gs::ObjectRef, gs::ObjectRef));
-};
 
 struct ObjectStub : gs::Object
 {
@@ -37,7 +27,7 @@ struct Calls : testing::Test
     gs::ObjectRef obj;
     gs::FunctionArgs args;
 
-    Calls() : obj(new ObjectMock)
+    Calls() : obj(new gs::ObjectMock)
     {
         args.push_back(obj);
     }
@@ -61,7 +51,7 @@ struct Calls : testing::Test
 TEST_F(Calls, callNoArgs)
 {
     gs::SharedScript s = loadScript("callTest1.gs");
-    EXPECT_CALL(static_cast<ObjectMock&>(*obj), testMethod1())
+    EXPECT_CALL(static_cast<gs::ObjectMock&>(*obj), testMethod1())
         .WillOnce(Return(gs::null));
     s->callFunction("test1", args);
 }
@@ -71,7 +61,7 @@ TEST_F(Calls, callTwoArgs)
     gs::SharedScript s = loadScript("callTest2.gs");
     args.push_back(gs::ObjectRef(new ObjectStub));
     args.push_back(gs::ObjectRef(new ObjectStub));
-    EXPECT_CALL(static_cast<ObjectMock&>(*obj), testMethod2(args[1], args[2]))
+    EXPECT_CALL(static_cast<gs::ObjectMock&>(*obj), testMethod2(args[1], args[2]))
         .WillOnce(Return(gs::null));
     s->callFunction("test2", args);
 }

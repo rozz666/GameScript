@@ -27,6 +27,7 @@ add_library(
     gscore STATIC
     gs/Script.cpp
     gs/ScriptParser.cpp
+    gs/ScriptFunction.cpp
 )
 
 add_executable(
@@ -35,6 +36,7 @@ add_executable(
     gs/test/GoogleTestController.cpp
     gs/test/unit/Script.cpp
     gs/test/unit/ScriptParser.cpp
+    gs/test/unit/ScriptFunction.cpp
 )
 
 add_executable(
