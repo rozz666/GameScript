@@ -119,7 +119,7 @@ class InterfaceWizard(Wizard):
         text += "public:\n"
         text += "    virtual ~" + className + "() { }\n"
         text += "protected:\n"
-        text += "    " + className + "()\n"
+        text += "    " + className + "() { }\n"
         text += "    " + className + "(const " + className + "& ) { }\n"
         text += "    " + className + "& operator=(const " + className + "& ) { return *this; }\n"
         text += "};\n\n"
@@ -145,9 +145,8 @@ class MockWizard(Wizard):
         text += "#include <gmock/gmock.h>\n\n"
         for id in namespaces:
             text += "namespace " + id + "\n{\n"
-        text += "\nclass " + className + "\n"
+        text += "\nstruct " + className + " : " + origClassQName.getName() + "\n"
         text += "{\n"
-        text += "public:\n"
         text += "};\n\n"
         text += "typedef boost::shared_ptr<" + className + "> Shared" + className + ";\n\n"
         for id in namespaces:
