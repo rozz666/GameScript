@@ -1,0 +1,5 @@
+*~
+.*
+!.git*
+build
+gmock-1.5.0/scripts/generator/cpp/*.pyc
