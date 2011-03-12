@@ -20,12 +20,25 @@ std::string ScriptFunction::getName() const
 
 void ScriptFunction::run(const gs::FunctionArgs& args)
 {
-    std::for_each(stmts_.begin(), stmts_.end(), boost::bind(&Statement::run, _1, vt_));
+    setArgs(args);
+    runStatements();
 }
 
 void ScriptFunction::addStatement(gs::SharedStatement stmt)
 {
     stmts_.push_back(stmt);
+}
+void ScriptFunction::setArgs(const gs::FunctionArgs& args)
+{
+    for (unsigned i = 0; i != args.size(); ++i)
+    {
+        vt_->set(i, args[i]);
+    }
+}
+
+void ScriptFunction::runStatements()
+{
+    std::for_each(stmts_.begin(), stmts_.end(), boost::bind(&Statement::run, _1, vt_));
 }
 
 }

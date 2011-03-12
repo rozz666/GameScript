@@ -10,6 +10,7 @@
 #define GS_VARIABLETABLE_HPP
 
 #include <boost/shared_ptr.hpp>
+#include <gs/Object.hpp>
 
 namespace gs
 {
@@ -18,6 +19,7 @@ class VariableTable
 {
 public:
     virtual ~VariableTable() { }
+    virtual void set(unsigned index, ObjectRef ref) = 0;
 protected:
     VariableTable() { }
     VariableTable(const VariableTable& ) { }

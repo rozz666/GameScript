@@ -28,6 +28,8 @@ private:
     std::string name_;
     SharedVariableTable vt_;
     std::vector<SharedStatement> stmts_;
+    void setArgs(const FunctionArgs& args);
+    void runStatements();
 };
 
 typedef boost::shared_ptr<ScriptFunction> SharedScriptFunction;

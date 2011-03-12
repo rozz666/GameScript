@@ -15,12 +15,8 @@
 #include <iterator>
 #include <algorithm>
 #include <gmock/gmock.h>
+#include <gs/test/unit/ObjectStub.hpp>
 using namespace testing;
-
-struct ObjectStub : gs::Object
-{
-    virtual void registerMethods(gs::Registry& ) { }
-};
 
 struct Calls : testing::Test
 {
@@ -59,8 +55,8 @@ TEST_F(Calls, callNoArgs)
 TEST_F(Calls, callTwoArgs)
 {
     gs::SharedScript s = loadScript("callTest2.gs");
-    args.push_back(gs::ObjectRef(new ObjectStub));
-    args.push_back(gs::ObjectRef(new ObjectStub));
+    args.push_back(gs::ObjectRef(new gs::ObjectStub));
+    args.push_back(gs::ObjectRef(new gs::ObjectStub));
     EXPECT_CALL(static_cast<gs::ObjectMock&>(*obj), testMethod2(args[1], args[2]))
         .WillOnce(Return(gs::null));
     s->callFunction("test2", args);
