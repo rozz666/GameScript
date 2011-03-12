@@ -28,6 +28,7 @@ add_library(
     gs/Script.cpp
     gs/ScriptParser.cpp
     gs/ScriptFunction.cpp
+    gs/stmt/CallMethod.cpp
 )
 
 add_executable(
@@ -37,6 +38,7 @@ add_executable(
     gs/test/unit/Script.cpp
     gs/test/unit/ScriptParser.cpp
     gs/test/unit/ScriptFunction.cpp
+    gs/test/unit/stmt/CallMethod.cpp
 )
 
 add_executable(

@@ -10,24 +10,29 @@
 #define GS_OBJECT_HPP
 
 #include <boost/shared_ptr.hpp>
+#include <vector>
 
 namespace gs
 {
 
-class Registry;
+class Object;
+
+typedef boost::shared_ptr<Object> SharedObject;
+typedef SharedObject ObjectRef;
+
+typedef std::vector<ObjectRef> CallArgs;
+
 class Object
 {
 public:
     virtual ~Object() { }
-    virtual void registerMethods(gs::Registry& r) = 0;
+    virtual void callMethod(const std::string& name, const CallArgs& args) = 0;
 protected:
     Object() { }
     Object(const Object& ) { }
     Object& operator=(const Object& ) { return *this; }
 };
 
-typedef boost::shared_ptr<Object> SharedObject;
-typedef SharedObject ObjectRef;
 
 }
 #endif /* GS_OBJECT_HPP */

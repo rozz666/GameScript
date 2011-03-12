@@ -18,6 +18,7 @@ namespace gs
 struct VariableTableMock : VariableTable
 {
     MOCK_METHOD2(set, void(unsigned, ObjectRef));
+    MOCK_METHOD1(get, ObjectRef(unsigned));
 };
 
 typedef boost::shared_ptr<VariableTableMock> SharedVariableTableMock;

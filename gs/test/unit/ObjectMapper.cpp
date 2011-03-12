@@ -6,19 +6,15 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#ifndef GS_OBJECTSTUB_HPP
-#define GS_OBJECTSTUB_HPP
-
-#include <gs/Object.hpp>
+#include <gs/ObjectMapper.hpp>
 #include <gmock/gmock.h>
 
-namespace gs
-{
+using namespace testing;
 
-struct ObjectStub : gs::Object
+struct gs_ObjectMapper : testing::Test
 {
-    virtual void callMethod(const std::string&, const gs::CallArgs&) { }
 };
 
+TEST_F(gs_ObjectMapper, firstTest)
+{
 }
-#endif /* GS_OBJECTSTUB_HPP */

@@ -20,6 +20,7 @@ class VariableTable
 public:
     virtual ~VariableTable() { }
     virtual void set(unsigned index, ObjectRef ref) = 0;
+    virtual ObjectRef get(unsigned index) = 0;
 protected:
     VariableTable() { }
     VariableTable(const VariableTable& ) { }

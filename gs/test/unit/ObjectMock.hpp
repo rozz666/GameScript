@@ -15,15 +15,9 @@
 namespace gs
 {
 
-struct ObjectMock : gs::Object
+struct ObjectMock : Object
 {
-    virtual void registerMethods(gs::Registry& r)
-    {
-        r.method0(&ObjectMock::testMethod1, "testMethod1");
-    }
-
-    MOCK_METHOD0(testMethod1, gs::ObjectRef());
-    MOCK_METHOD2(testMethod2, gs::ObjectRef(gs::ObjectRef, gs::ObjectRef));
+    MOCK_METHOD2(callMethod, void(const std::string&, const gs::CallArgs&));
 };
 
 typedef boost::shared_ptr<ObjectMock> SharedObjectMock;
