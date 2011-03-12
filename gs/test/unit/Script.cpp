@@ -16,17 +16,25 @@ struct gs_Script : testing::Test
 {
 };
 
-TEST_F(gs_Script, addAndCallOneFunction)
+TEST_F(gs_Script, addAndCallTwoFunctions)
 {
     gs::Script script;
-    gs::SharedFunctionMock f(new gs::FunctionMock);
+    gs::SharedFunctionMock f1(new gs::FunctionMock);
+    gs::SharedFunctionMock f2(new gs::FunctionMock);
     gs::FunctionArgs args;
-    std::string name = "abc";
-    EXPECT_CALL(*f, getName())
-        .WillRepeatedly(Return(name));
-    script.addFunction(f);
+    std::string name1 = "abc";
+    std::string name2 = "xyz";
+    EXPECT_CALL(*f1, getName())
+        .WillRepeatedly(Return(name1));
+    script.addFunction(f1);
+    EXPECT_CALL(*f2, getName())
+        .WillRepeatedly(Return(name2));
+    script.addFunction(f2);
 
-    EXPECT_CALL(*f, run(Ref(args)))
+    EXPECT_CALL(*f1, run(Ref(args)))
         .Times(1);
-    script.callFunction(name, args);
+    script.callFunction(name1, args);
+    EXPECT_CALL(*f2, run(Ref(args)))
+        .Times(1);
+    script.callFunction(name2, args);
 }

@@ -13,11 +13,12 @@ namespace gs
 
 void Script::callFunction(const std::string& name, const gs::FunctionArgs& args)
 {
-    f->run(args);
+    functions_[name]->run(args);
 }
+
 void Script::addFunction(SharedFunction f)
 {
-    this->f = f;
+    functions_[f->getName()] = f;
 }
 
 }

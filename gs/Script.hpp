@@ -12,6 +12,7 @@
 #include <gs/Function.hpp>
 #include <vector>
 #include <boost/shared_ptr.hpp>
+#include <boost/unordered_map.hpp>
 
 namespace gs
 {
@@ -22,7 +23,8 @@ public:
     void callFunction(const std::string& name, const FunctionArgs& args);
     void addFunction(SharedFunction f);
 private:
-    SharedFunction f;
+    typedef boost::unordered_map<std::string, SharedFunction> Functions;
+    Functions functions_;
 };
 
 typedef boost::shared_ptr<Script> SharedScript;
