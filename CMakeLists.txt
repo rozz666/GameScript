@@ -39,6 +39,7 @@ add_executable(
     gs/test/unit/ScriptParser.cpp
     gs/test/unit/ScriptFunction.cpp
     gs/test/unit/stmt/CallMethod.cpp
+    gs/test/unit/ObjectMapper.cpp
 )
 
 add_executable(

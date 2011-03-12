@@ -19,8 +19,8 @@ struct MappedObjectMock : gs::ObjectMapper<MappedObjectMock>
 {
     MappedObjectMock()
     {
-        addMethod(&MappedObjectMock::testMethod1);
-        addMethod(&MappedObjectMock::testMethod2);
+        addMethod(&MappedObjectMock::testMethod1, "testMethod1");
+        addMethod(&MappedObjectMock::testMethod2, "testMethod2");
     }
 
     MOCK_METHOD0(testMethod1, gs::ObjectRef());
