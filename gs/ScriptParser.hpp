@@ -11,6 +11,8 @@
 
 #include <gs/Script.hpp>
 #include <boost/shared_ptr.hpp>
+#include <gs/ScriptFactory.hpp>
+#include <gs/FunctionFactory.hpp>
 
 namespace gs
 {
@@ -18,10 +20,17 @@ namespace gs
 class ScriptParser
 {
 public:
-    SharedScript parse(const std::string& text)
-    {
-        return SharedScript(new Script);
-    }
+
+    ScriptParser(SharedScriptFactory scriptFactory, SharedFunctionFactory functionFactory)
+        : scriptFactory(scriptFactory), functionFactory(functionFactory) { }
+
+    SharedScriptInterface parse(const std::string& text);
+
+private:
+    SharedScriptFactory scriptFactory;
+    SharedFunctionFactory functionFactory;
+    void parseLine(const std::string& line, SharedScriptInterface script);
+    void parseLines(const std::string& text, SharedScriptInterface script);
 };
 
 typedef boost::shared_ptr<ScriptParser> SharedScriptParser;

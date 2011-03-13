@@ -16,6 +16,7 @@
 #include <algorithm>
 #include <gmock/gmock.h>
 #include <gs/test/unit/ObjectStub.hpp>
+#include <gs/ScriptParserFactory.hpp>
 using namespace testing;
 
 struct Calls : testing::Test
@@ -37,16 +38,16 @@ struct Calls : testing::Test
         return text;
     }
 
-    gs::SharedScript loadScript(const std::string& path)
+    gs::SharedScriptInterface loadScript(const std::string& path)
     {
-        gs::ScriptParser parser;
-        return parser.parse(loadFile("gs/test/acceptance/scripts/" + path));
+        gs::SharedScriptParser parser = gs::ScriptParserFactory().createScriptParser();
+        return parser->parse(loadFile("gs/test/acceptance/scripts/" + path));
     }
 };
 
 TEST_F(Calls, callNoArgs)
 {
-    gs::SharedScript s = loadScript("callTest1.gs");
+    gs::SharedScriptInterface s = loadScript("callTest1.gs");
     EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod1())
         .WillOnce(Return(gs::null));
     s->callFunction("test1", args);
@@ -54,7 +55,7 @@ TEST_F(Calls, callNoArgs)
 
 TEST_F(Calls, callTwoArgs)
 {
-    gs::SharedScript s = loadScript("callTest2.gs");
+    gs::SharedScriptInterface s = loadScript("callTest2.gs");
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
     EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod2(args[1], args[2]))

@@ -9,19 +9,19 @@
 #ifndef GS_SCRIPT_HPP
 #define GS_SCRIPT_HPP
 
-#include <gs/Function.hpp>
 #include <vector>
 #include <boost/shared_ptr.hpp>
 #include <boost/unordered_map.hpp>
+#include <gs/ScriptInterface.hpp>
 
 namespace gs
 {
 
-class Script
+class Script : public ScriptInterface
 {
 public:
-    void callFunction(const std::string& name, const FunctionArgs& args);
-    void addFunction(SharedFunction f);
+    virtual void callFunction(const std::string& name, const FunctionArgs& args);
+    virtual void addFunction(SharedFunction f);
 private:
     typedef boost::unordered_map<std::string, SharedFunction> Functions;
     Functions functions_;

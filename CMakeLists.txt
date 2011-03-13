@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 2.8)
 
 include_directories("." "gmock-1.5.0/fused-src" "dicpp/include")
 
+set(CMAKE_CXX_FLAGS "-Wall")
+
 add_library(
     gmock STATIC
     gmock-1.5.0/fused-src/gmock-gtest-all.cc
@@ -30,6 +32,9 @@ add_library(
     gs/ScriptFunction.cpp
     gs/stmt/CallMethod.cpp
     gs/ScriptVariableTable.cpp
+    gs/ScriptFactory.cpp
+    gs/ScriptParserFactory.cpp
+    gs/FunctionFactory.cpp
 )
 
 add_executable(
@@ -51,5 +56,5 @@ add_executable(
     gs/test/acceptance/calls.cpp
 )
 
-target_link_libraries(gamescriptut gscore gmock dicpp pthread)
-target_link_libraries(gamescriptat gscore gmock dicpp pthread)
+target_link_libraries(gamescriptut gscore gmock dicpp pthread boost_regex)
+target_link_libraries(gamescriptat gscore gmock dicpp pthread boost_regex)
