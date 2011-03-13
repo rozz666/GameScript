@@ -159,6 +159,14 @@ class MockWizard(Wizard):
         origClassQName = ClassQualifiedName(strName)
         self.createMockFile(classQName, origClassQName)
 
+class FactoryWizard(Wizard):
+    def createFactory(self, strName):
+        classQName = ClassQualifiedName(strName)
+        ClassWizard().createHeaderFile(classQName)
+        ClassWizard().createSourceFile(classQName)
+        MockWizard().createMock(strName)
+
+
 class CodeWizard(QtGui.QMainWindow):
 
     def __init__(self):
@@ -173,14 +181,18 @@ class CodeWizard(QtGui.QMainWindow):
         createInterfaceAction.setStatusTip("Create an interface")
         createMockAction = QtGui.QAction("Create Mock", self)
         createMockAction.setStatusTip("Create a mock")
+        createFactoryAction = QtGui.QAction("Create Factory", self)
+        createFactoryAction.setStatusTip("Create a factory")
         self.connect(createClassAction, QtCore.SIGNAL("triggered()"), self.createClass)
         self.connect(createInterfaceAction, QtCore.SIGNAL("triggered()"), self.createInterface)
         self.connect(createMockAction, QtCore.SIGNAL("triggered()"), self.createMock)
+        self.connect(createFactoryAction, QtCore.SIGNAL("triggered()"), self.createFactory)
 
         self.toolbar = self.addToolBar("Main")
         self.toolbar.addAction(createClassAction)
         self.toolbar.addAction(createInterfaceAction)
         self.toolbar.addAction(createMockAction)
+        self.toolbar.addAction(createFactoryAction)
         self.toolbar.setOrientation(QtCore.Qt.Vertical)
 
         self.setSizePolicy(QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum))
@@ -203,6 +215,13 @@ class CodeWizard(QtGui.QMainWindow):
         if not ok:
             return
         MockWizard().createMock(str(mockQualifiedName))
+
+    def createFactory(self):
+        factoryQualifiedName, ok = QtGui.QInputDialog.getText(self, 'Create Factory', 'Enter factory name:')
+        if not ok:
+            return
+        FactoryWizard().createFactory(str(factoryQualifiedName))
+
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
