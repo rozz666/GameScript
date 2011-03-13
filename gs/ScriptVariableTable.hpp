@@ -11,6 +11,7 @@
 
 #include <boost/shared_ptr.hpp>
 #include <gs/VariableTable.hpp>
+#include <boost/unordered_map.hpp>
 
 namespace gs
 {
@@ -21,7 +22,7 @@ public:
     virtual ObjectRef get(unsigned int index);
     virtual void set(unsigned int index, ObjectRef ref);
 private:
-    ObjectRef object_;
+    boost::unordered_map<unsigned, ObjectRef> objects_;
 };
 
 typedef boost::shared_ptr<ScriptVariableTable> SharedScriptVariableTable;

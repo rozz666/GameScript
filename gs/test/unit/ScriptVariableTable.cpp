@@ -19,8 +19,11 @@ struct gs_ScriptVariableTable : testing::Test
 TEST_F(gs_ScriptVariableTable, testGetSet)
 {
     gs::ScriptVariableTable vt;
-    gs::ObjectRef obj(new gs::ObjectStub);
+    gs::ObjectRef obj1(new gs::ObjectStub);
+    gs::ObjectRef obj2(new gs::ObjectStub);
 
-    vt.set(0, obj);
-    ASSERT_TRUE(vt.get(0) == obj);
+    vt.set(0, obj1);
+    vt.set(7, obj2);
+    ASSERT_TRUE(vt.get(0) == obj1);
+    ASSERT_TRUE(vt.get(7) == obj2);
 }

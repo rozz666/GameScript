@@ -14,12 +14,12 @@ namespace gs
 
 gs::ObjectRef ScriptVariableTable::get(unsigned int index)
 {
-    return object_;
+    return objects_[index];
 }
 
 void ScriptVariableTable::set(unsigned int index, ObjectRef ref)
 {
-    object_ = ref;
+    objects_[index] = ref;
 }
 
 }
