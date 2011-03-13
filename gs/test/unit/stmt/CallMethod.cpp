@@ -26,7 +26,7 @@ TEST_F(gs_stmt_CallMethod, callMethod)
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
     gs::stmt::CallMethod cm(objectIndex, methodName, args);
-    gs::SharedObject obj(new gs::ObjectMock);
+    gs::ObjectRef obj(new gs::ObjectMock);
     gs::SharedVariableTableMock vt(new gs::VariableTableMock);
 
     EXPECT_CALL(*vt, get(objectIndex))
