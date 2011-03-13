@@ -8,37 +8,59 @@
 //
 #include <gs/ScriptParser.hpp>
 #include <gmock/gmock.h>
-#include <gs/test/unit/FunctionMock.hpp>
-#include <gs/test/unit/ScriptFactoryMock.hpp>
-#include <gs/test/unit/FunctionFactoryMock.hpp>
-#include <gs/test/unit/ScriptInterfaceMock.hpp>
+#include <gs/test/unit/StatementHandlerMock.hpp>
 
 using namespace testing;
 
 struct gs_ScriptParser : testing::Test
 {
+    std::string source;
+    gs::SharedStatementHandlerMock statementHandler;
+    gs::ScriptParser parser;
+
+    gs_ScriptParser()
+        : statementHandler(new gs::StatementHandlerMock), parser(statementHandler) { }
+
+    void parse()
+    {
+        parser.parse(source);
+    }
 };
 
-TEST_F(gs_ScriptParser, emptyFunction)
+TEST_F(gs_ScriptParser, functionDefs)
 {
-    gs::SharedFunctionMock f1(new gs::FunctionMock);
-    gs::SharedFunctionMock f2(new gs::FunctionMock);
-    gs::SharedScriptInterfaceMock script(new gs::ScriptInterfaceMock);
-    // returned mocks have to be declared BEFORE factory mocks due to Google Mock bug
-    gs::SharedFunctionFactoryMock functionFactory(new gs::FunctionFactoryMock);
-    gs::SharedScriptFactoryMock scriptFactory(new gs::ScriptFactoryMock);
-    gs::ScriptParser parser(scriptFactory, functionFactory);
+    source = " def functionName1 ( )\n\ndef   functionName2(xyz5, y )\n";
+    {
+        InSequence seq;
+        gs::FunctionArgs args;
+        EXPECT_CALL(*statementHandler, functionDef(1, "functionName1", args));
+        args.push_back("xyz5");
+        args.push_back("y");
+        EXPECT_CALL(*statementHandler, functionDef(3, "functionName2", args));
+        EXPECT_CALL(*statementHandler, eof(4));
+    }
+    parse();
+}
 
-    std::string source = "def functionName1()\nend\ndef   functionName2()\nend";
+TEST_F(gs_ScriptParser, ends)
+{
+    source = " end \nend";
+    {
+        InSequence seq;
+        EXPECT_CALL(*statementHandler, end(1));
+        EXPECT_CALL(*statementHandler, end(2));
+        EXPECT_CALL(*statementHandler, eof(3));
+    }
+    parse();
+}
 
-    EXPECT_CALL(*scriptFactory, createScript())
-        .WillOnce(Return(script));
-    EXPECT_CALL(*functionFactory, createFunction("functionName1"))
-        .WillOnce(Return(f1));
-    EXPECT_CALL(*functionFactory, createFunction("functionName2"))
-        .WillOnce(Return(f2));
-    EXPECT_CALL(*script, addFunction(gs::SharedFunction(f1)));
-    EXPECT_CALL(*script, addFunction(gs::SharedFunction(f2)));
-
-    ASSERT_TRUE(parser.parse(source) == script);
+TEST_F(gs_ScriptParser, methodCall)
+{
+    source = " abc.xyz() ";
+    {
+        InSequence seq;
+        EXPECT_CALL(*statementHandler, methodCall(1, "abc", "xyz"));
+        EXPECT_CALL(*statementHandler, eof(_));
+    }
+    parse();
 }

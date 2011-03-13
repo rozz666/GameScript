@@ -7,36 +7,84 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 #include <gs/ScriptParser.hpp>
-#include <boost/regex.hpp>
+#include <boost/spirit/include/qi.hpp>
+#include <boost/fusion/adapted/struct/adapt_struct.hpp>
 #include <sstream>
+
 
 namespace gs
 {
 
-SharedScriptInterface ScriptParser::parse(const std::string& text)
+struct FunctionDef
 {
-    SharedScriptInterface script = scriptFactory->createScript();
-    parseLines(text, script);
-    return script;
+    std::string name;
+    std::vector<std::string> args;
+};
+
+struct MethodCall
+{
+    std::string object;
+    std::string method;
+};
+
 }
 
-void ScriptParser::parseLine(const std::string& line, SharedScriptInterface script)
-{
-    boost::regex def("def +(.+)\\(\\)");
-    boost::match_results<std::string::const_iterator> res;
-    if (boost::regex_match(line, res, def))
-    {
-        script->addFunction(functionFactory->createFunction(res[1].str()));
-    }
-}
+BOOST_FUSION_ADAPT_STRUCT(
+    gs::FunctionDef,
+    (std::string, name)
+    (std::vector<std::string>, args)
+)
 
-void ScriptParser::parseLines(const std::string& text, SharedScriptInterface script)
+BOOST_FUSION_ADAPT_STRUCT(
+    gs::MethodCall,
+    (std::string, object)
+    (std::string, method)
+)
+
+namespace gs
+{
+
+void ScriptParser::parse(const std::string& text)
 {
     std::istringstream ss(text);
     std::string line;
+    unsigned lineNo = 1;
     while (std::getline(ss, line))
     {
-        parseLine(line, script);
+        parseLine(lineNo, line);
+        ++lineNo;
+    }
+    stmtHandler->eof(lineNo);
+}
+
+void ScriptParser::parseLine(unsigned lineNo, const std::string& line)
+{
+    namespace qi = boost::spirit::qi;
+    namespace ascii = boost::spirit::ascii;
+
+    qi::rule<std::string::const_iterator, std::string(), ascii::space_type> identifier =
+        qi::lexeme[qi::char_("a-zA-Z_") >> *qi::char_("a-zA-Z0-9_")];
+
+    FunctionDef functionDef;
+    MethodCall methodCall;
+
+    if (qi::phrase_parse(
+        line.begin(), line.end(),
+        "def" >> identifier >> "(" >> -(identifier % ",") >> ")" >> qi::eoi,
+        ascii::space, functionDef))
+    {
+        stmtHandler->functionDef(lineNo, functionDef.name, functionDef.args);
+    }
+    else if (qi::phrase_parse(line.begin(), line.end(), "end" >> qi::eoi, ascii::space))
+    {
+        stmtHandler->end(lineNo);
+    }
+    else if (qi::phrase_parse(
+        line.begin(), line.end(),
+        identifier >> "." >> identifier >> "()" >> qi::eoi,
+        ascii::space, methodCall))
+    {
+        stmtHandler->methodCall(lineNo, methodCall.object, methodCall.method);
     }
 }
 

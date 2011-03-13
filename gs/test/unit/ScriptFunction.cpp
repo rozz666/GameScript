@@ -16,39 +16,39 @@ using namespace testing;
 
 struct gs_ScriptFunction : testing::Test
 {
+    gs::CallArgs args;
+    gs::SharedVariableTableMock vt;
+    gs::ScriptFunction sf;
+
+    gs_ScriptFunction()
+        : vt(new gs::VariableTableMock), sf("", vt) { }
 };
 
 TEST_F(gs_ScriptFunction, name)
 {
     std::string name = "abcd";
-    gs::ScriptFunction sf(name, gs::SharedVariableTable());
+    gs::ScriptFunction sf(name, vt);
     ASSERT_EQ(name, sf.getName());
 }
 
 TEST_F(gs_ScriptFunction, addAndRunTwoStatements)
 {
-    gs::SharedVariableTable vt(new gs::VariableTableMock);
-    gs::ScriptFunction sf("", vt);
     gs::SharedStatementMock st1(new gs::StatementMock);
     gs::SharedStatementMock st2(new gs::StatementMock);
     sf.addStatement(st1);
     sf.addStatement(st2);
     {
         InSequence seq;
-        EXPECT_CALL(*st1, run(vt));
-        EXPECT_CALL(*st2, run(vt));
+        EXPECT_CALL(*st1, run(gs::SharedVariableTable(vt)));
+        EXPECT_CALL(*st2, run(gs::SharedVariableTable(vt)));
     }
-    gs::FunctionArgs args;
     sf.run(args);
 }
 
 TEST_F(gs_ScriptFunction, twoArgs)
 {
-    gs::SharedVariableTableMock vt(new gs::VariableTableMock);
-    gs::ScriptFunction sf("", vt);
     gs::SharedStatementMock st(new gs::StatementMock);
     sf.addStatement(st);
-    gs::FunctionArgs args;
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
     {

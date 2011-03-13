@@ -7,8 +7,6 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 #include <gs/Object.hpp>
-#include <gs/Registry.hpp>
-#include <gs/ScriptParser.hpp>
 #include <gs/null.hpp>
 #include <gs/test/unit/MappedObjectMock.hpp>
 #include <fstream>
@@ -16,13 +14,13 @@
 #include <algorithm>
 #include <gmock/gmock.h>
 #include <gs/test/unit/ObjectStub.hpp>
-#include <gs/ScriptParserFactory.hpp>
+#include <gs/ScriptCompilerFactory.hpp>
 using namespace testing;
 
 struct Calls : testing::Test
 {
     gs::ObjectRef obj;
-    gs::FunctionArgs args;
+    gs::CallArgs args;
 
     Calls() : obj(new gs::MappedObjectMock)
     {
@@ -40,8 +38,8 @@ struct Calls : testing::Test
 
     gs::SharedScriptInterface loadScript(const std::string& path)
     {
-        gs::SharedScriptParser parser = gs::ScriptParserFactory().createScriptParser();
-        return parser->parse(loadFile("gs/test/acceptance/scripts/" + path));
+        gs::SharedCompiler compiler = gs::ScriptCompilerFactory().createCompiler();
+        return compiler->compile(loadFile("gs/test/acceptance/scripts/" + path));
     }
 };
 

@@ -21,7 +21,7 @@ TEST_F(gs_Script, addAndCallTwoFunctions)
     gs::Script script;
     gs::SharedFunctionMock f1(new gs::FunctionMock);
     gs::SharedFunctionMock f2(new gs::FunctionMock);
-    gs::FunctionArgs args;
+    gs::CallArgs args;
     std::string name1 = "abc";
     std::string name2 = "xyz";
     EXPECT_CALL(*f1, getName())

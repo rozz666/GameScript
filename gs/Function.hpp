@@ -17,14 +17,12 @@
 namespace gs
 {
 
-typedef std::vector<ObjectRef> FunctionArgs;
-
 class Function
 {
 public:
     virtual ~Function() { }
     virtual std::string getName() const = 0;
-    virtual void run(const FunctionArgs& args) = 0;
+    virtual void run(const CallArgs& args) = 0;
 protected:
     Function() { }
     Function(const Function& ) { }

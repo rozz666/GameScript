@@ -6,19 +6,8 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#include <gs/Script.hpp>
+#include <gs/StatementHandlerFactory.hpp>
 
 namespace gs
 {
-
-void Script::callFunction(const std::string& name, const gs::CallArgs& args)
-{
-    functions_[name]->run(args);
-}
-
-void Script::addFunction(SharedFunction f)
-{
-    functions_[f->getName()] = f;
-}
-
 }

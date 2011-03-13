@@ -18,7 +18,7 @@ std::string ScriptFunction::getName() const
     return name_;
 }
 
-void ScriptFunction::run(const gs::FunctionArgs& args)
+void ScriptFunction::run(const gs::CallArgs& args)
 {
     setArgs(args);
     runStatements();
@@ -28,7 +28,7 @@ void ScriptFunction::addStatement(gs::SharedStatement stmt)
 {
     stmts_.push_back(stmt);
 }
-void ScriptFunction::setArgs(const gs::FunctionArgs& args)
+void ScriptFunction::setArgs(const gs::CallArgs& args)
 {
     for (unsigned i = 0; i != args.size(); ++i)
     {
