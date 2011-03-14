@@ -8,7 +8,7 @@
 //
 #include <gs/ParserFactory.hpp>
 #include <gs/ScriptParser.hpp>
-#include "ScriptStatementHandler.hpp"
+#include <gs/ScriptStatementHandler.hpp>
 
 namespace gs
 {
