@@ -25,6 +25,7 @@ struct MethodCall
 {
     std::string object;
     std::string method;
+    std::vector<std::string> args;
 };
 
 }
@@ -39,6 +40,7 @@ BOOST_FUSION_ADAPT_STRUCT(
     gs::MethodCall,
     (std::string, object)
     (std::string, method)
+    (std::vector<std::string>, args)
 )
 
 namespace gs
@@ -81,10 +83,10 @@ void ScriptParser::parseLine(unsigned lineNo, const std::string& line)
     }
     else if (qi::phrase_parse(
         line.begin(), line.end(),
-        identifier >> "." >> identifier >> "()" >> qi::eoi,
+        identifier >> "." >> identifier >> "(" >> -(identifier % ",") >> ")" >> qi::eoi,
         ascii::space, methodCall))
     {
-        stmtHandler->methodCall(lineNo, methodCall.object, methodCall.method);
+        stmtHandler->methodCall(lineNo, methodCall.object, methodCall.method, methodCall.args);
     }
 }
 

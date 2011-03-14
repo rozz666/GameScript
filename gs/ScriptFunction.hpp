@@ -23,7 +23,7 @@ public:
     ScriptFunction(const std::string& name, SharedVariableTable vt) : name_(name), vt_(vt) { }
     virtual std::string getName() const;
     virtual void run(const CallArgs& args);
-    void addStatement(SharedStatement stmt);
+    virtual void addStatement(SharedStatement stmt);
 private:
     std::string name_;
     SharedVariableTable vt_;

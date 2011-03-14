@@ -15,6 +15,8 @@
 namespace gs
 {
 
+typedef std::vector<unsigned> ObjectIndices;
+
 class Statement
 {
 public:

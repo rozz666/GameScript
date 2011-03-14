@@ -37,6 +37,8 @@ add_library(
     gs/FunctionFactory.cpp
     gs/ScriptCompiler.cpp
     gs/ScriptCompilerFactory.cpp
+    gs/ScriptStatementHandler.cpp
+    gs/StatementFactory.cpp
 )
 
 add_executable(
@@ -50,6 +52,7 @@ add_executable(
     gs/test/unit/ObjectMapper.cpp
     gs/test/unit/ScriptVariableTable.cpp
     gs/test/unit/ScriptCompiler.cpp
+    gs/test/unit/ScriptStatementHandler.cpp
 )
 
 add_executable(

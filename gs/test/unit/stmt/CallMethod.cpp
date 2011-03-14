@@ -22,15 +22,25 @@ TEST_F(gs_stmt_CallMethod, callMethod)
 {
     unsigned objectIndex = 3;
     std::string methodName = "xyz123";
-    gs::CallArgs args;
-    args.push_back(gs::ObjectRef(new gs::ObjectStub));
-    args.push_back(gs::ObjectRef(new gs::ObjectStub));
-    gs::stmt::CallMethod cm(objectIndex, methodName, args);
+    gs::ObjectIndices indices;
+    indices.push_back(5);
+    indices.push_back(6);
+    gs::stmt::CallMethod cm(objectIndex, methodName, indices);
     gs::ObjectRef obj(new gs::ObjectMock);
+    gs::ObjectRef arg0(new gs::ObjectStub);
+    gs::ObjectRef arg1(new gs::ObjectStub);
     gs::SharedVariableTableMock vt(new gs::VariableTableMock);
+    gs::CallArgs args;
+    args.push_back(arg0);
+    args.push_back(arg1);
 
     EXPECT_CALL(*vt, get(objectIndex))
         .WillOnce(Return(obj));
+    EXPECT_CALL(*vt, get(indices[0]))
+        .WillOnce(Return(arg0));
+    EXPECT_CALL(*vt, get(indices[1]))
+        .WillOnce(Return(arg1));
+
     EXPECT_CALL(static_cast<gs::ObjectMock&>(*obj), callMethod(methodName, args));
 
     cm.run(vt);

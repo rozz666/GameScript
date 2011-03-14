@@ -56,10 +56,14 @@ TEST_F(gs_ScriptParser, ends)
 
 TEST_F(gs_ScriptParser, methodCall)
 {
-    source = " abc.xyz() ";
+    source = " abc.xyz() \no.m(x, y) ";
     {
         InSequence seq;
-        EXPECT_CALL(*statementHandler, methodCall(1, "abc", "xyz"));
+        gs::FunctionArgs args;
+        EXPECT_CALL(*statementHandler, methodCall(1, "abc", "xyz", args));
+        args.push_back("x");
+        args.push_back("y");
+        EXPECT_CALL(*statementHandler, methodCall(2, "o", "m", args));
         EXPECT_CALL(*statementHandler, eof(_));
     }
     parse();

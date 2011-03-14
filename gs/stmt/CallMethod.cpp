@@ -7,6 +7,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 #include <gs/stmt/CallMethod.hpp>
+#include <boost/bind.hpp>
 
 namespace gs
 {
@@ -15,7 +16,9 @@ namespace stmt
 
 void CallMethod::run(SharedVariableTable vt)
 {
-    vt->get(objectIndex_)->callMethod(methodName_, args_);
+    CallArgs args(indices_.size());
+    std::transform(indices_.begin(), indices_.end(), args.begin(), boost::bind(&VariableTable::get, vt, _1));
+    vt->get(objectIndex_)->callMethod(methodName_, args);
 }
 
 }

@@ -10,7 +10,6 @@
 #include <gmock/gmock.h>
 #include <gs/test/unit/ScriptFactoryMock.hpp>
 #include <gs/test/unit/ScriptInterfaceMock.hpp>
-#include <gs/test/unit/StatementHandlerFactoryMock.hpp>
 #include <gs/test/unit/StatementHandlerMock.hpp>
 #include <gs/test/unit/ParserFactoryMock.hpp>
 #include <gs/test/unit/ParserMock.hpp>

@@ -25,7 +25,8 @@ public:
     virtual void functionDef(unsigned line, const std::string& name, const FunctionArgs& args) = 0;
     virtual void end(unsigned line) = 0;
     virtual void eof(unsigned line) = 0;
-    virtual void methodCall(unsigned int line, const std::string& object, const std::string& method) = 0;
+    virtual void methodCall(
+        unsigned int line, const std::string& object, const std::string& method, const FunctionArgs& args) = 0;
 protected:
     StatementHandler() { }
     StatementHandler(const StatementHandler& ) { }

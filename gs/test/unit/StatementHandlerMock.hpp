@@ -17,10 +17,10 @@ namespace gs
 
 struct StatementHandlerMock : StatementHandler
 {
-    MOCK_METHOD3(functionDef, void(unsigned int line, const std::string& name, const gs::FunctionArgs& args));
-    MOCK_METHOD1(end, void(unsigned int line));
-    MOCK_METHOD1(eof, void(unsigned int line));
-    MOCK_METHOD3(methodCall, void(unsigned int line, const std::string& object, const std::string& method));
+    MOCK_METHOD3(functionDef, void(unsigned, const std::string&, const gs::FunctionArgs&));
+    MOCK_METHOD1(end, void(unsigned));
+    MOCK_METHOD1(eof, void(unsigned));
+    MOCK_METHOD4(methodCall, void(unsigned, const std::string&, const std::string&, const FunctionArgs&));
 };
 
 typedef boost::shared_ptr<StatementHandlerMock> SharedStatementHandlerMock;
