@@ -7,6 +7,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 #include <gs/ScriptStatementHandler.hpp>
+#include <boost/bind.hpp>
 
 namespace gs
 {
@@ -23,12 +24,27 @@ void ScriptStatementHandler::eof(unsigned int line)
 void ScriptStatementHandler::functionDef(unsigned int line, const std::string& name, const gs::FunctionArgs& args)
 {
     function = functionFactory->createFunction(name);
+    functionArgs = args;
 }
 
 void ScriptStatementHandler::methodCall(
     unsigned int line, const std::string& object, const std::string& method, const gs::FunctionArgs& args)
 {
-    function->addStatement(statementFactory->createCallMethod(0, method, ObjectIndices()));
+    ObjectIndices indices = findObjectIndices(args);
+    function->addStatement(statementFactory->createCallMethod(0, method, indices));
+}
+
+unsigned ScriptStatementHandler::indexOfArg(const std::string& arg)
+{
+    return std::distance(functionArgs.begin(), std::find(functionArgs.begin(), functionArgs.end(), arg));
+}
+
+ObjectIndices ScriptStatementHandler::findObjectIndices(const gs::FunctionArgs& args)
+{
+    ObjectIndices indices(args.size());
+    std::transform(
+        args.begin(), args.end(), indices.begin(), boost::bind(&ScriptStatementHandler::indexOfArg, this, _1));
+    return indices;
 }
 
 }

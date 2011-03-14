@@ -16,6 +16,7 @@
 #include <boost/assign/list_of.hpp>
 
 using namespace testing;
+using boost::assign::list_of;
 
 struct gs_ScriptStatementHandler : testing::Test
 {
@@ -49,7 +50,7 @@ TEST_F(gs_ScriptStatementHandler, methodCallNoArgs)
     gs::SharedStatement stmt(new gs::StatementStub);
     EXPECT_CALL(*functionFactory, createFunction(_))
         .WillOnce(Return(function));
-    gs::FunctionArgs args = boost::assign::list_of("xx");
+    gs::FunctionArgs args = list_of("xx");
 
     stmtHandler.functionDef(1, "asia", args);
 
@@ -59,4 +60,23 @@ TEST_F(gs_ScriptStatementHandler, methodCallNoArgs)
     EXPECT_CALL(*function, addStatement(stmt));
 
     stmtHandler.methodCall(5, args[0], methodName, gs::FunctionArgs());
+}
+
+TEST_F(gs_ScriptStatementHandler, methodCallWithArgs)
+{
+    gs::SharedStatement stmt(new gs::StatementStub);
+    EXPECT_CALL(*functionFactory, createFunction(_))
+        .WillOnce(Return(function));
+    gs::FunctionArgs args = list_of("obj")("a")("b");
+
+    stmtHandler.functionDef(1, "asia", args);
+
+    std::string methodName = "y";
+    gs::ObjectIndices indices = list_of(1)(2);
+    EXPECT_CALL(*stmtFactory, createCallMethod(0, methodName, indices))
+        .WillOnce(Return(stmt));
+    EXPECT_CALL(*function, addStatement(stmt));
+
+    gs::FunctionArgs callArgs = list_of(args[indices[0]])(args[indices[1]]);
+    stmtHandler.methodCall(5, args[0], methodName, callArgs);
 }
