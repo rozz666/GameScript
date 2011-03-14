@@ -28,6 +28,11 @@ struct MethodCall
     std::vector<std::string> args;
 };
 
+template <typename RuleType>
+struct Rule
+{
+    typedef boost::spirit::qi::rule<std::string::const_iterator, RuleType(), boost::spirit::ascii::space_type> Type;
+};
 }
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -64,27 +69,24 @@ void ScriptParser::parseLine(unsigned lineNo, const std::string& line)
     namespace qi = boost::spirit::qi;
     namespace ascii = boost::spirit::ascii;
 
-    qi::rule<std::string::const_iterator, std::string(), ascii::space_type> identifier =
-        qi::lexeme[qi::char_("a-zA-Z_") >> *qi::char_("a-zA-Z0-9_")];
+    Rule<std::string>::Type identifier = qi::lexeme[qi::char_("a-zA-Z_") >> *qi::char_("a-zA-Z0-9_")];
+    Rule<FunctionDef>::Type functionDefRule = "def" >> identifier >> "(" >> -(identifier % ",") >> ")" >> qi::eoi;
+    Rule<void>::Type endRule = "end" >> qi::eoi;
+    Rule<MethodCall>::Type methodCallRule =
+        identifier >> "." >> identifier >> "(" >> -(identifier % ",") >> ")" >> qi::eoi;
 
     FunctionDef functionDef;
     MethodCall methodCall;
 
-    if (qi::phrase_parse(
-        line.begin(), line.end(),
-        "def" >> identifier >> "(" >> -(identifier % ",") >> ")" >> qi::eoi,
-        ascii::space, functionDef))
+    if (qi::phrase_parse(line.begin(), line.end(), functionDefRule, ascii::space, functionDef))
     {
         stmtHandler->functionDef(lineNo, functionDef.name, functionDef.args);
     }
-    else if (qi::phrase_parse(line.begin(), line.end(), "end" >> qi::eoi, ascii::space))
+    else if (qi::phrase_parse(line.begin(), line.end(), endRule, ascii::space))
     {
         stmtHandler->end(lineNo);
     }
-    else if (qi::phrase_parse(
-        line.begin(), line.end(),
-        identifier >> "." >> identifier >> "(" >> -(identifier % ",") >> ")" >> qi::eoi,
-        ascii::space, methodCall))
+    else if (qi::phrase_parse(line.begin(), line.end(), methodCallRule, ascii::space, methodCall))
     {
         stmtHandler->methodCall(lineNo, methodCall.object, methodCall.method, methodCall.args);
     }
