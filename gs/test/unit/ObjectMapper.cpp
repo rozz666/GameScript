@@ -9,7 +9,6 @@
 #include <gs/ObjectMapper.hpp>
 #include <gmock/gmock.h>
 #include <gs/test/unit/ObjectStub.hpp>
-#include <gs/null.hpp>
 
 using namespace testing;
 
@@ -33,16 +32,19 @@ struct gs_ObjectMapper : testing::Test
 {
     MappedObject mo;
     gs::CallArgs args;
+    gs::ObjectRef obj;
+
+    gs_ObjectMapper() : obj(new gs::ObjectStub) { }
 };
 
 TEST_F(gs_ObjectMapper, method0)
 {
     EXPECT_CALL(mo, method0a())
-        .WillOnce(Return(gs::null));
-    mo.callMethod("method0a", args);
+        .WillOnce(Return(obj));
+    ASSERT_TRUE(mo.callMethod("method0a", args) == obj);
     EXPECT_CALL(mo, method0b())
-        .WillOnce(Return(gs::null));
-    mo.callMethod("method0b", args);
+        .WillOnce(Return(obj));
+    ASSERT_TRUE(mo.callMethod("method0b", args) == obj);
 }
 
 TEST_F(gs_ObjectMapper, method1)
@@ -50,8 +52,8 @@ TEST_F(gs_ObjectMapper, method1)
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
 
     EXPECT_CALL(mo, method1(args[0]))
-        .WillOnce(Return(gs::null));
-    mo.callMethod("method1", args);
+        .WillOnce(Return(obj));
+    ASSERT_TRUE(mo.callMethod("method1", args) == obj);
 }
 
 TEST_F(gs_ObjectMapper, method2)
@@ -60,6 +62,6 @@ TEST_F(gs_ObjectMapper, method2)
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
 
     EXPECT_CALL(mo, method2(args[0], args[1]))
-        .WillOnce(Return(gs::null));
-    mo.callMethod("method2", args);
+        .WillOnce(Return(obj));
+    ASSERT_TRUE(mo.callMethod("method2", args) == obj);
 }

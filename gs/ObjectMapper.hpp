@@ -23,8 +23,7 @@ class ObjectMapper : public Object
 public:
     virtual ObjectRef callMethod(const std::string& name, const gs::CallArgs& args)
     {
-        methods_[name]->call(static_cast<ObjectType&>(*this), args);
-        return ObjectRef();
+        return methods_[name]->call(static_cast<ObjectType&>(*this), args);
     }
 
 protected:
@@ -51,7 +50,7 @@ private:
     {
     public:
         virtual ~Caller() { }
-        virtual void call(ObjectType& obj, const gs::CallArgs& args) = 0;
+        virtual ObjectRef call(ObjectType& obj, const gs::CallArgs& args) = 0;
     };
 
     typedef boost::shared_ptr<Caller> SharedCaller;
@@ -60,9 +59,9 @@ private:
     {
     public:
         Caller0(Method0 m) : m_(m) { }
-        virtual void call(ObjectType& obj, const gs::CallArgs& args)
+        virtual ObjectRef call(ObjectType& obj, const gs::CallArgs& args)
         {
-            (obj.*m_)();
+            return (obj.*m_)();
         }
     private:
         Method0 m_;
@@ -72,9 +71,9 @@ private:
     {
     public:
         Caller1(Method1 m) : m_(m) { }
-        virtual void call(ObjectType& obj, const gs::CallArgs& args)
+        virtual ObjectRef call(ObjectType& obj, const gs::CallArgs& args)
         {
-            (obj.*m_)(args[0]);
+            return (obj.*m_)(args[0]);
         }
     private:
         Method1 m_;
@@ -84,9 +83,9 @@ private:
     {
     public:
         Caller2(Method2 m) : m_(m) { }
-        virtual void call(ObjectType& obj, const gs::CallArgs& args)
+        virtual ObjectRef call(ObjectType& obj, const gs::CallArgs& args)
         {
-            (obj.*m_)(args[0], args[1]);
+            return (obj.*m_)(args[0], args[1]);
         }
     private:
         Method2 m_;
