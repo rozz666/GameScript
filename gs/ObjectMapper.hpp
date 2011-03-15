@@ -21,9 +21,10 @@ template <typename ObjectType>
 class ObjectMapper : public Object
 {
 public:
-    virtual void callMethod(const std::string& name, const gs::CallArgs& args)
+    virtual ObjectRef callMethod(const std::string& name, const gs::CallArgs& args)
     {
         methods_[name]->call(static_cast<ObjectType&>(*this), args);
+        return ObjectRef();
     }
 
 protected:

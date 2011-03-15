@@ -26,7 +26,7 @@ class Object
 {
 public:
     virtual ~Object() { }
-    virtual void callMethod(const std::string& name, const CallArgs& args) = 0;
+    virtual ObjectRef callMethod(const std::string& name, const CallArgs& args) = 0;
 protected:
     Object() { }
     Object(const Object& ) { }

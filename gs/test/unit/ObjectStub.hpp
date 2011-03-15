@@ -17,7 +17,7 @@ namespace gs
 
 struct ObjectStub : gs::Object
 {
-    virtual void callMethod(const std::string&, const gs::CallArgs&) { }
+    virtual ObjectRef callMethod(const std::string&, const gs::CallArgs&) { return ObjectRef(); }
 };
 
 }

@@ -40,6 +40,8 @@ add_library(
     gs/ScriptStatementHandler.cpp
     gs/StatementFactory.cpp
     gs/stmt/Return.cpp
+    gs/expr/Object.cpp
+    gs/expr/MethodCall.cpp
 )
 
 add_executable(
@@ -55,6 +57,8 @@ add_executable(
     gs/test/unit/ScriptCompiler.cpp
     gs/test/unit/ScriptStatementHandler.cpp
     gs/test/unit/stmt/Return.cpp
+    gs/test/unit/expr/Object.cpp
+    gs/test/unit/expr/MethodCall.cpp
 )
 
 add_executable(

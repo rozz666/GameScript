@@ -17,7 +17,7 @@ namespace gs
 
 struct ObjectMock : Object
 {
-    MOCK_METHOD2(callMethod, void(const std::string&, const gs::CallArgs&));
+    MOCK_METHOD2(callMethod, ObjectRef(const std::string&, const gs::CallArgs&));
 };
 
 typedef boost::shared_ptr<ObjectMock> SharedObjectMock;

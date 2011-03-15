@@ -6,30 +6,30 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#include <gs/stmt/CallMethod.hpp>
+#include <gs/expr/MethodCall.hpp>
 #include <gmock/gmock.h>
 #include <gs/test/unit/ObjectMock.hpp>
 #include <gs/test/unit/ObjectStub.hpp>
 #include <gs/test/unit/VariableTableMock.hpp>
-#include <gs/null.hpp>
 
 using namespace testing;
 
-struct gs_stmt_CallMethod : testing::Test
+struct gs_expr_MethodCall : testing::Test
 {
 };
 
-TEST_F(gs_stmt_CallMethod, callMethod)
+TEST_F(gs_expr_MethodCall, evaluate)
 {
     unsigned objectIndex = 3;
     std::string methodName = "xyz123";
     gs::ObjectIndices indices;
     indices.push_back(5);
     indices.push_back(6);
-    gs::stmt::CallMethod cm(objectIndex, methodName, indices);
+    gs::expr::MethodCall mc(objectIndex, methodName, indices);
     gs::ObjectRef obj(new gs::ObjectMock);
     gs::ObjectRef arg0(new gs::ObjectStub);
     gs::ObjectRef arg1(new gs::ObjectStub);
+    gs::ObjectRef result(new gs::ObjectStub);
     gs::SharedVariableTableMock vt(new gs::VariableTableMock);
     gs::CallArgs args;
     args.push_back(arg0);
@@ -43,7 +43,7 @@ TEST_F(gs_stmt_CallMethod, callMethod)
         .WillOnce(Return(arg1));
 
     EXPECT_CALL(static_cast<gs::ObjectMock&>(*obj), callMethod(methodName, args))
-        .WillOnce(Return(gs::null));
+        .WillOnce(Return(result));
 
-    cm.run(vt);
+    ASSERT_TRUE(mc.eval(vt) == result);
 }
