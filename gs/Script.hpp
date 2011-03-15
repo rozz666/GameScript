@@ -20,7 +20,7 @@ namespace gs
 class Script : public ScriptInterface
 {
 public:
-    virtual void callFunction(const std::string& name, const CallArgs& args);
+    virtual ObjectRef callFunction(const std::string& name, const CallArgs& args);
     virtual void addFunction(SharedFunction f);
 private:
     typedef boost::unordered_map<std::string, SharedFunction> Functions;

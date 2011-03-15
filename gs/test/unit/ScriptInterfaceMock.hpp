@@ -18,7 +18,7 @@ namespace gs
 struct ScriptInterfaceMock : ScriptInterface
 {
     MOCK_METHOD1(addFunction, void(SharedFunction));
-    MOCK_METHOD2(callFunction, void(const std::string&, const gs::CallArgs&));
+    MOCK_METHOD2(callFunction, ObjectRef(const std::string&, const gs::CallArgs&));
 };
 
 typedef boost::shared_ptr<ScriptInterfaceMock> SharedScriptInterfaceMock;

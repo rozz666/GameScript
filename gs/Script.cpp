@@ -11,9 +11,10 @@
 namespace gs
 {
 
-void Script::callFunction(const std::string& name, const gs::CallArgs& args)
+ObjectRef Script::callFunction(const std::string& name, const gs::CallArgs& args)
 {
     functions_[name]->run(args);
+    return ObjectRef();
 }
 
 void Script::addFunction(SharedFunction f)

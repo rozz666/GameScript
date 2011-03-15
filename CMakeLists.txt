@@ -60,6 +60,7 @@ add_executable(
     gs/test/acceptance/main.cpp
     gs/test/GoogleTestController.cpp
     gs/test/acceptance/calls.cpp
+    gs/test/acceptance/returns.cpp
 )
 
 target_link_libraries(gamescriptut gscore gmock dicpp pthread boost_regex)

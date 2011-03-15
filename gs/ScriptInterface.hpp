@@ -20,7 +20,7 @@ class ScriptInterface
 public:
     virtual ~ScriptInterface() { }
     virtual void addFunction(SharedFunction f) = 0;
-    virtual void callFunction(const std::string& name, const CallArgs& args) = 0;
+    virtual ObjectRef callFunction(const std::string& name, const CallArgs& args) = 0;
 protected:
     ScriptInterface() { }
     ScriptInterface(const ScriptInterface& ) { }
