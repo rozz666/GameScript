@@ -42,6 +42,7 @@ add_library(
     gs/stmt/Return.cpp
     gs/expr/Object.cpp
     gs/expr/MethodCall.cpp
+    gs/ExpressionFactory.cpp
 )
 
 add_executable(
