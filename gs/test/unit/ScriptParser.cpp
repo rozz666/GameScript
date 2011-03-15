@@ -68,3 +68,16 @@ TEST_F(gs_ScriptParser, methodCall)
     }
     parse();
 }
+
+TEST_F(gs_ScriptParser, returnStatement)
+{
+    source = " return x \nreturn zzz ";
+    {
+        InSequence seq;
+        gs::FunctionArgs args;
+        EXPECT_CALL(*statementHandler, returnStmt(1, "x"));
+        EXPECT_CALL(*statementHandler, returnStmt(2, "zzz"));
+        EXPECT_CALL(*statementHandler, eof(_));
+    }
+    parse();
+}
