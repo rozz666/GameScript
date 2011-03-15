@@ -16,7 +16,7 @@ namespace gs
 
 struct StatementStub : Statement
 {
-    virtual void run(SharedVariableTable vt) { }
+    virtual boost::optional<ObjectRef> run(SharedVariableTable vt) { return boost::none; }
 };
 
 typedef boost::shared_ptr<StatementStub> SharedStatementStub;

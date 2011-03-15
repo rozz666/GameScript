@@ -18,7 +18,7 @@ namespace gs
 struct FunctionMock : Function
 {
     MOCK_CONST_METHOD0(getName, std::string());
-    MOCK_METHOD1(run, void(const CallArgs& ));
+    MOCK_METHOD1(run, ObjectRef(const CallArgs& ));
     MOCK_METHOD1(addStatement, void(SharedStatement));
 };
 

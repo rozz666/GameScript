@@ -22,14 +22,14 @@ class ScriptFunction : public Function
 public:
     ScriptFunction(const std::string& name, SharedVariableTable vt) : name_(name), vt_(vt) { }
     virtual std::string getName() const;
-    virtual void run(const CallArgs& args);
+    virtual ObjectRef run(const CallArgs& args);
     virtual void addStatement(SharedStatement stmt);
 private:
     std::string name_;
     SharedVariableTable vt_;
     std::vector<SharedStatement> stmts_;
     void setArgs(const CallArgs& args);
-    void runStatements();
+    ObjectRef runStatements();
 };
 
 typedef boost::shared_ptr<ScriptFunction> SharedScriptFunction;

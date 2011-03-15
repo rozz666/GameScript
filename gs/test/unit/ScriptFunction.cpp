@@ -11,6 +11,7 @@
 #include <gs/test/unit/VariableTableMock.hpp>
 #include <gs/test/unit/ObjectStub.hpp>
 #include <gmock/gmock.h>
+#include <gs/null.hpp>
 
 using namespace testing;
 
@@ -39,10 +40,12 @@ TEST_F(gs_ScriptFunction, addAndRunTwoStatements)
     sf.addStatement(st2);
     {
         InSequence seq;
-        EXPECT_CALL(*st1, run(gs::SharedVariableTable(vt)));
-        EXPECT_CALL(*st2, run(gs::SharedVariableTable(vt)));
+        EXPECT_CALL(*st1, run(gs::SharedVariableTable(vt)))
+            .WillOnce(Return(boost::none));
+        EXPECT_CALL(*st2, run(gs::SharedVariableTable(vt)))
+            .WillOnce(Return(boost::none));
     }
-    sf.run(args);
+    ASSERT_TRUE(sf.run(args) == gs::null);
 }
 
 TEST_F(gs_ScriptFunction, twoArgs)
@@ -55,7 +58,18 @@ TEST_F(gs_ScriptFunction, twoArgs)
         InSequence seq;
         EXPECT_CALL(*vt, set(0, args[0]));
         EXPECT_CALL(*vt, set(1, args[1]));
-        EXPECT_CALL(*st, run(_));
+        EXPECT_CALL(*st, run(_))
+            .WillOnce(Return(boost::none));
     }
-    sf.run(args);
+    ASSERT_TRUE(sf.run(args) == gs::null);
+}
+
+TEST_F(gs_ScriptFunction, terminatingStatement)
+{
+    gs::SharedStatementMock st(new gs::StatementMock);
+    sf.addStatement(st);
+    gs::ObjectRef obj(new gs::ObjectStub);
+    EXPECT_CALL(*st, run(_))
+        .WillOnce(Return(obj));
+    ASSERT_TRUE(sf.run(gs::CallArgs()) == obj);
 }

@@ -6,19 +6,16 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#include <gs/Script.hpp>
+#include <gs/stmt/Return.hpp>
 
 namespace gs
 {
-
-ObjectRef Script::callFunction(const std::string& name, const gs::CallArgs& args)
+namespace stmt
 {
-    return functions_[name]->run(args);
+boost::optional<ObjectRef> Return::run(SharedVariableTable vt)
+{
+    return vt->get(objectIndex);
 }
 
-void Script::addFunction(SharedFunction f)
-{
-    functions_[f->getName()] = f;
 }
-
 }

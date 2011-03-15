@@ -23,7 +23,7 @@ class Function
 public:
     virtual ~Function() { }
     virtual std::string getName() const = 0;
-    virtual void run(const CallArgs& args) = 0;
+    virtual ObjectRef run(const CallArgs& args) = 0;
     virtual void addStatement(SharedStatement stmt) = 0;
 protected:
     Function() { }

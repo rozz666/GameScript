@@ -11,6 +11,7 @@
 
 #include <gs/VariableTable.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/optional.hpp>
 
 namespace gs
 {
@@ -21,7 +22,7 @@ class Statement
 {
 public:
     virtual ~Statement() { }
-    virtual void run(SharedVariableTable vt) = 0;
+    virtual boost::optional<ObjectRef> run(SharedVariableTable vt) = 0;
 protected:
     Statement() { }
     Statement(const Statement& ) { }

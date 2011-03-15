@@ -17,7 +17,7 @@ namespace gs
 
 struct StatementMock : Statement
 {
-    MOCK_METHOD1(run, void(SharedVariableTable));
+    MOCK_METHOD1(run, boost::optional<ObjectRef>(SharedVariableTable));
 };
 
 typedef boost::shared_ptr<StatementMock> SharedStatementMock;

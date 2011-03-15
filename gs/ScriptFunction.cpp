@@ -9,6 +9,8 @@
 #include <gs/ScriptFunction.hpp>
 #include <algorithm>
 #include <boost/bind.hpp>
+#include <boost/foreach.hpp>
+#include <gs/null.hpp>
 
 namespace gs
 {
@@ -18,10 +20,10 @@ std::string ScriptFunction::getName() const
     return name_;
 }
 
-void ScriptFunction::run(const gs::CallArgs& args)
+ObjectRef ScriptFunction::run(const gs::CallArgs& args)
 {
     setArgs(args);
-    runStatements();
+    return runStatements();
 }
 
 void ScriptFunction::addStatement(gs::SharedStatement stmt)
@@ -36,9 +38,16 @@ void ScriptFunction::setArgs(const gs::CallArgs& args)
     }
 }
 
-void ScriptFunction::runStatements()
+ObjectRef ScriptFunction::runStatements()
 {
-    std::for_each(stmts_.begin(), stmts_.end(), boost::bind(&Statement::run, _1, vt_));
+    BOOST_FOREACH(gs::SharedStatement st, stmts_)
+    {
+        if (boost::optional<ObjectRef> ret = st->run(vt_))
+        {
+            return *ret;
+        }
+    }
+    return ObjectRef();
 }
 
 }

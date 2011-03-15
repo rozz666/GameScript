@@ -23,7 +23,7 @@ class CallMethod : public Statement
 public:
     CallMethod(unsigned objectIndex, const std::string& methodName, const ObjectIndices& indices)
         : objectIndex_(objectIndex), methodName_(methodName), indices_(indices) { }
-    virtual void run(SharedVariableTable vt);
+    virtual boost::optional<ObjectRef> run(SharedVariableTable vt);
 private:
     unsigned objectIndex_;
     std::string methodName_;
