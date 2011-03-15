@@ -8,6 +8,7 @@
 //
 #include <gs/StatementFactory.hpp>
 #include <gs/stmt/CallMethod.hpp>
+#include <gs/stmt/Return.hpp>
 
 namespace gs
 {
@@ -16,6 +17,11 @@ SharedStatement StatementFactory::createCallMethod(
     unsigned int objectIndex, const std::string& methodName, const gs::ObjectIndices& indices)
 {
     return SharedStatement(new stmt::CallMethod(objectIndex, methodName, indices));
+}
+
+SharedStatement StatementFactory::createReturn(unsigned objectIndex)
+{
+    return SharedStatement(new stmt::Return(objectIndex));
 }
 
 }

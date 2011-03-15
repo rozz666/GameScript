@@ -18,6 +18,7 @@ namespace gs
 struct StatementFactoryMock : StatementFactory
 {
     MOCK_METHOD3(createCallMethod, SharedStatement(unsigned, const std::string&, const gs::ObjectIndices& ));
+    MOCK_METHOD1(createReturn, SharedStatement(unsigned));
 };
 
 typedef boost::shared_ptr<StatementFactoryMock> SharedStatementFactoryMock;

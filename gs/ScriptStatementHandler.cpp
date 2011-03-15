@@ -47,4 +47,9 @@ ObjectIndices ScriptStatementHandler::findObjectIndices(const gs::FunctionArgs& 
     return indices;
 }
 
+void ScriptStatementHandler::returnStmt(unsigned line, const std::string& object)
+{
+    function->addStatement(statementFactory->createReturn(indexOfArg(object)));
+}
+
 }

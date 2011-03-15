@@ -25,11 +25,20 @@ struct gs_ScriptStatementHandler : testing::Test
     gs::SharedStatementFactoryMock stmtFactory;
     gs::SharedScriptInterfaceMock script;
     gs::ScriptStatementHandler stmtHandler;
+    gs::SharedStatement stmt;
 
     gs_ScriptStatementHandler()
         : function(new gs::FunctionMock), functionFactory(new gs::FunctionFactoryMock),
         stmtFactory(new gs::StatementFactoryMock), script(new gs::ScriptInterfaceMock),
-        stmtHandler(script, functionFactory, stmtFactory) { }
+        stmtHandler(script, functionFactory, stmtFactory), stmt(new gs::StatementStub) { }
+
+    void setupFunction(const gs::FunctionArgs& args)
+    {
+        EXPECT_CALL(*functionFactory, createFunction(_))
+            .WillOnce(Return(function));
+
+        stmtHandler.functionDef(1, "asia", args);
+    }
 };
 
 TEST_F(gs_ScriptStatementHandler, emptyFunction)
@@ -47,12 +56,8 @@ TEST_F(gs_ScriptStatementHandler, emptyFunction)
 
 TEST_F(gs_ScriptStatementHandler, methodCallNoArgs)
 {
-    gs::SharedStatement stmt(new gs::StatementStub);
-    EXPECT_CALL(*functionFactory, createFunction(_))
-        .WillOnce(Return(function));
     gs::FunctionArgs args = list_of("xx");
-
-    stmtHandler.functionDef(1, "asia", args);
+    setupFunction(args);
 
     std::string methodName = "y";
     EXPECT_CALL(*stmtFactory, createCallMethod(0, methodName, gs::ObjectIndices()))
@@ -64,12 +69,8 @@ TEST_F(gs_ScriptStatementHandler, methodCallNoArgs)
 
 TEST_F(gs_ScriptStatementHandler, methodCallWithArgs)
 {
-    gs::SharedStatement stmt(new gs::StatementStub);
-    EXPECT_CALL(*functionFactory, createFunction(_))
-        .WillOnce(Return(function));
     gs::FunctionArgs args = list_of("obj")("a")("b");
-
-    stmtHandler.functionDef(1, "asia", args);
+    setupFunction(args);
 
     std::string methodName = "y";
     gs::ObjectIndices indices = list_of(1)(2);
@@ -79,4 +80,16 @@ TEST_F(gs_ScriptStatementHandler, methodCallWithArgs)
 
     gs::FunctionArgs callArgs = list_of(args[indices[0]])(args[indices[1]]);
     stmtHandler.methodCall(5, args[0], methodName, callArgs);
+}
+
+TEST_F(gs_ScriptStatementHandler, returnObject)
+{
+    gs::FunctionArgs args = list_of("abc")("def");
+    setupFunction(args);
+    unsigned objectIndex = 1;
+    EXPECT_CALL(*stmtFactory, createReturn(objectIndex))
+        .WillOnce(Return(stmt));
+    EXPECT_CALL(*function, addStatement(stmt));
+
+    stmtHandler.returnStmt(7, args[objectIndex]);
 }

@@ -20,6 +20,7 @@ class StatementFactory
 public:
     virtual SharedStatement createCallMethod(
         unsigned objectIndex, const std::string& methodName, const ObjectIndices& indices);
+    virtual SharedStatement createReturn(unsigned objectIndex);
 };
 
 typedef boost::shared_ptr<StatementFactory> SharedStatementFactory;
