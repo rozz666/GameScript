@@ -20,8 +20,7 @@ TEST_F(LocalVars, argRefs)
     gs::SharedScriptInterface s = loadScript("localVar1.gs");
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
-    EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod2(args[2], args[1]))
-        .WillOnce(Return(gs::null));
+    EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod2(args[2], args[1]));
     s->callFunction("localVarTest1", args);
 }
 
@@ -46,8 +45,7 @@ TEST_F(LocalVars, varRef)
 TEST_F(LocalVars, defaultVars)
 {
     gs::SharedScriptInterface s = loadScript("localVar4.gs");
-    EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod2(gs::null, gs::null))
-        .WillOnce(Return(gs::null));
+    EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod2(gs::null, gs::null));
     s->callFunction("localVarTest4", args);
 }
 
@@ -55,8 +53,7 @@ TEST_F(LocalVars, varAssignment)
 {
     gs::SharedScriptInterface s = loadScript("localVar5.gs");
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
-    EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod2(args[1], args[1]))
-        .WillOnce(Return(gs::null));
+    EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod2(args[1], args[1]));
     s->callFunction("localVarTest5", args);
 }
 
@@ -65,7 +62,6 @@ TEST_F(LocalVars, argAssignment)
     gs::SharedScriptInterface s = loadScript("localVar6.gs");
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
-    EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod2(args[2], args[1]))
-        .WillOnce(Return(gs::null));
+    EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod2(args[2], args[1]));
     s->callFunction("localVarTest6", args);
 }

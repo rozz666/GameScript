@@ -11,6 +11,7 @@
 #include <gs/Object.hpp>
 #include <gs/ScriptCompilerFactory.hpp>
 #include <gs/test/acceptance/MappedObjectMock.hpp>
+#include <gs/test/defaultValues.hpp>
 #include <fstream>
 #include <iterator>
 #include <algorithm>

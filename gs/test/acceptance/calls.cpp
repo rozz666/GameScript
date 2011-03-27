@@ -18,8 +18,7 @@ struct Calls : gs::ATFixture
 TEST_F(Calls, callNoArgs)
 {
     gs::SharedScriptInterface s = loadScript("callTest1.gs");
-    EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod1())
-        .WillOnce(Return(gs::null));
+    EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod1());
     s->callFunction("test1", args);
 }
 
@@ -28,7 +27,6 @@ TEST_F(Calls, callTwoArgs)
     gs::SharedScriptInterface s = loadScript("callTest2.gs");
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
-    EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod2(args[1], args[2]))
-        .WillOnce(Return(gs::null));
+    EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod2(args[1], args[2]));
     s->callFunction("test2", args);
 }
