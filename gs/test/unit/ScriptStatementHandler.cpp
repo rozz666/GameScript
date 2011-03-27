@@ -13,6 +13,8 @@
 #include <gs/test/unit/FunctionMock.hpp>
 #include <gs/test/unit/StatementFactoryMock.hpp>
 #include <gs/test/unit/StatementStub.hpp>
+#include <gs/test/unit/ExpressionFactoryMock.hpp>
+#include <gs/test/unit/ExpressionMock.hpp>
 #include <boost/assign/list_of.hpp>
 
 using namespace testing;
@@ -24,13 +26,15 @@ struct gs_ScriptStatementHandler : testing::Test
     gs::SharedFunctionFactoryMock functionFactory;
     gs::SharedStatementFactoryMock stmtFactory;
     gs::SharedScriptInterfaceMock script;
+    gs::SharedExpressionFactoryMock exprFactory;
     gs::ScriptStatementHandler stmtHandler;
     gs::SharedStatement stmt;
 
     gs_ScriptStatementHandler()
         : function(new gs::FunctionMock), functionFactory(new gs::FunctionFactoryMock),
         stmtFactory(new gs::StatementFactoryMock), script(new gs::ScriptInterfaceMock),
-        stmtHandler(script, functionFactory, stmtFactory), stmt(new gs::StatementStub) { }
+        exprFactory(new gs::ExpressionFactoryMock),
+        stmtHandler(script, functionFactory, stmtFactory, exprFactory), stmt(new gs::StatementStub) { }
 
     void setupFunction(const gs::FunctionArgs& args)
     {
@@ -87,7 +91,10 @@ TEST_F(gs_ScriptStatementHandler, returnObject)
     gs::FunctionArgs args = list_of("abc")("def");
     setupFunction(args);
     unsigned objectIndex = 1;
-    EXPECT_CALL(*stmtFactory, createReturn(objectIndex))
+    gs::SharedExpression expr(new gs::ExpressionMock);
+    EXPECT_CALL(*exprFactory, createObject(objectIndex))
+        .WillOnce(Return(expr));
+    EXPECT_CALL(*stmtFactory, createReturn(expr))
         .WillOnce(Return(stmt));
     EXPECT_CALL(*function, addStatement(stmt));
 

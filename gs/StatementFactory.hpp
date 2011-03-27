@@ -11,6 +11,7 @@
 
 #include <gs/Statement.hpp>
 #include <boost/shared_ptr.hpp>
+#include <gs/Expression.hpp>
 
 namespace gs
 {
@@ -20,7 +21,7 @@ class StatementFactory
 public:
     virtual SharedStatement createCallMethod(
         unsigned objectIndex, const std::string& methodName, const ObjectIndices& indices);
-    virtual SharedStatement createReturn(unsigned objectIndex);
+    virtual SharedStatement createReturn(SharedExpression expr);
 };
 
 typedef boost::shared_ptr<StatementFactory> SharedStatementFactory;

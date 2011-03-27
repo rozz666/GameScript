@@ -14,6 +14,7 @@
 #include <gs/FunctionFactory.hpp>
 #include <gs/ScriptInterface.hpp>
 #include <gs/StatementFactory.hpp>
+#include <gs/ExpressionFactory.hpp>
 
 namespace gs
 {
@@ -22,8 +23,10 @@ class ScriptStatementHandler : public StatementHandler
 {
 public:
     ScriptStatementHandler(
-        SharedScriptInterface script, SharedFunctionFactory functionFactory, SharedStatementFactory statementFactory)
-        : script(script), functionFactory(functionFactory), statementFactory(statementFactory) { }
+        SharedScriptInterface script, SharedFunctionFactory functionFactory, SharedStatementFactory statementFactory,
+        SharedExpressionFactory expressionFactory)
+        : script(script), functionFactory(functionFactory), statementFactory(statementFactory),
+        expressionFactory(expressionFactory) { }
     virtual void end(unsigned int line);
     virtual void eof(unsigned int line);
     virtual void functionDef(unsigned int line, const std::string& name, const FunctionArgs& args);
@@ -34,6 +37,7 @@ private:
     SharedScriptInterface script;
     SharedFunctionFactory functionFactory;
     SharedStatementFactory statementFactory;
+    SharedExpressionFactory expressionFactory;
     SharedFunction function;
     FunctionArgs functionArgs;
     unsigned indexOfArg(const std::string& arg);

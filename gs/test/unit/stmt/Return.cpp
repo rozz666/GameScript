@@ -22,16 +22,6 @@ struct gs_stmt_Return : testing::Test
     gs_stmt_Return() : vt(new gs::VariableTableMock), obj(new gs::ObjectStub) { }
 };
 
-TEST_F(gs_stmt_Return, returnObject)
-{
-    unsigned objectIndex = 5;
-    gs::stmt::Return ret(objectIndex);
-
-    EXPECT_CALL(*vt, get(objectIndex))
-        .WillOnce(Return(obj));
-    ASSERT_TRUE(ret.run(vt) == obj);
-}
-
 TEST_F(gs_stmt_Return, returnExpression)
 {
     gs::SharedExpressionMock expr(new gs::ExpressionMock);

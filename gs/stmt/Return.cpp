@@ -18,10 +18,5 @@ boost::optional<ObjectRef> Return::run(SharedVariableTable vt)
     return expr->eval(vt);
 }
 
-Return::Return(unsigned objectIndex) : expr(new expr::Object(objectIndex))
-{
-
-}
-
 }
 }

@@ -19,9 +19,9 @@ SharedStatement StatementFactory::createCallMethod(
     return SharedStatement(new stmt::CallMethod(objectIndex, methodName, indices));
 }
 
-SharedStatement StatementFactory::createReturn(unsigned objectIndex)
+SharedStatement StatementFactory::createReturn(SharedExpression expr)
 {
-    return SharedStatement(new stmt::Return(objectIndex));
+    return SharedStatement(new stmt::Return(expr));
 }
 
 }

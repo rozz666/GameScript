@@ -17,7 +17,8 @@ SharedParser ParserFactory::createParser(SharedScriptInterface script)
 {
     SharedFunctionFactory functionFactory(new FunctionFactory);
     SharedStatementFactory stmtFactory(new StatementFactory);
-    SharedStatementHandler stmtHandler(new ScriptStatementHandler(script, functionFactory, stmtFactory));
+    SharedExpressionFactory exprFactory(new ExpressionFactory);
+    SharedStatementHandler stmtHandler(new ScriptStatementHandler(script, functionFactory, stmtFactory, exprFactory));
     return SharedParser(new ScriptParser(stmtHandler));
 }
 

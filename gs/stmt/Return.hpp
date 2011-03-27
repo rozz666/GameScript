@@ -21,7 +21,6 @@ namespace stmt
 class Return : public Statement
 {
 public:
-    Return(unsigned objectIndex);
     Return(SharedExpression expr) : expr(expr) { }
     virtual boost::optional<ObjectRef> run(SharedVariableTable vt);
 private:
