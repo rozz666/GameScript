@@ -7,6 +7,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 #include <gs/stmt/Return.hpp>
+#include <gs/expr/Object.hpp>
 
 namespace gs
 {
@@ -14,7 +15,12 @@ namespace stmt
 {
 boost::optional<ObjectRef> Return::run(SharedVariableTable vt)
 {
-    return vt->get(objectIndex);
+    return expr->eval(vt);
+}
+
+Return::Return(unsigned objectIndex) : expr(new expr::Object(objectIndex))
+{
+
 }
 
 }

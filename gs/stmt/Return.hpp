@@ -11,6 +11,7 @@
 
 #include <boost/shared_ptr.hpp>
 #include <gs/Statement.hpp>
+#include <gs/Expression.hpp>
 
 namespace gs
 {
@@ -20,10 +21,11 @@ namespace stmt
 class Return : public Statement
 {
 public:
-    Return(unsigned objectIndex) : objectIndex(objectIndex) { }
+    Return(unsigned objectIndex);
+    Return(SharedExpression expr) : expr(expr) { }
     virtual boost::optional<ObjectRef> run(SharedVariableTable vt);
 private:
-    unsigned objectIndex;
+    SharedExpression expr;
 };
 
 typedef boost::shared_ptr<Return> SharedReturn;

@@ -10,21 +10,34 @@
 #include <gmock/gmock.h>
 #include <gs/test/unit/VariableTableMock.hpp>
 #include <gs/test/unit/ObjectStub.hpp>
+#include <gs/test/unit/ExpressionMock.hpp>
 
 using namespace testing;
 
 struct gs_stmt_Return : testing::Test
 {
+    gs::SharedVariableTableMock vt;
+    gs::ObjectRef obj;
+
+    gs_stmt_Return() : vt(new gs::VariableTableMock), obj(new gs::ObjectStub) { }
 };
 
 TEST_F(gs_stmt_Return, returnObject)
 {
-    gs::SharedVariableTableMock vt(new gs::VariableTableMock);
     unsigned objectIndex = 5;
-    gs::ObjectRef obj(new gs::ObjectStub);
     gs::stmt::Return ret(objectIndex);
 
     EXPECT_CALL(*vt, get(objectIndex))
+        .WillOnce(Return(obj));
+    ASSERT_TRUE(ret.run(vt) == obj);
+}
+
+TEST_F(gs_stmt_Return, returnExpression)
+{
+    gs::SharedExpressionMock expr(new gs::ExpressionMock);
+    gs::stmt::Return ret(expr);
+
+    EXPECT_CALL(*expr, eval(gs::SharedVariableTable(vt)))
         .WillOnce(Return(obj));
     ASSERT_TRUE(ret.run(vt) == obj);
 }
