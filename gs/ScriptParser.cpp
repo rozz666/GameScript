@@ -74,10 +74,12 @@ void ScriptParser::parseLine(unsigned lineNo, const std::string& line)
     Rule<void>::Type endRule = "end" >> qi::eoi;
     Rule<MethodCall>::Type methodCallRule =
         identifier >> "." >> identifier >> "(" >> -(identifier % ",") >> ")" >> qi::eoi;
-    Rule<std::string>::Type returnStmt = "return" >> identifier >> qi::eoi;
+    Rule<std::string>::Type returnStmtRule = "return" >> identifier >> qi::eoi;
+    Rule<MethodCall>::Type returnStmtMethodCallRule = "return" >> methodCallRule;
 
     FunctionDef functionDef;
     MethodCall methodCall;
+    MethodCall returnMethodCall;
     std::string objectName;
 
     if (qi::phrase_parse(line.begin(), line.end(), functionDefRule, ascii::space, functionDef))
@@ -92,9 +94,13 @@ void ScriptParser::parseLine(unsigned lineNo, const std::string& line)
     {
         stmtHandler->methodCall(lineNo, methodCall.object, methodCall.method, methodCall.args);
     }
-    else if (qi::phrase_parse(line.begin(), line.end(), returnStmt, ascii::space, objectName))
+    else if (qi::phrase_parse(line.begin(), line.end(), returnStmtRule, ascii::space, objectName))
     {
         stmtHandler->returnStmt(lineNo, objectName);
+    }
+    else if (qi::phrase_parse(line.begin(), line.end(), returnStmtMethodCallRule, ascii::space, returnMethodCall))
+    {
+        stmtHandler->returnStmt(lineNo, returnMethodCall.object, returnMethodCall.method, returnMethodCall.args);
     }
 }
 

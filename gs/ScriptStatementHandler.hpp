@@ -33,6 +33,8 @@ public:
     virtual void methodCall(
         unsigned int line, const std::string& object, const std::string& method, const FunctionArgs& args);
     virtual void returnStmt(unsigned line, const std::string& object);
+    virtual void returnStmt(
+        unsigned line, const std::string& object, const std::string& method, const FunctionArgs& args);
 private:
     SharedScriptInterface script;
     SharedFunctionFactory functionFactory;

@@ -100,3 +100,21 @@ TEST_F(gs_ScriptStatementHandler, returnObject)
 
     stmtHandler.returnStmt(7, args[objectIndex]);
 }
+
+TEST_F(gs_ScriptStatementHandler, returnMethodCall)
+{
+    gs::FunctionArgs args = list_of("x")("y")("z");
+    setupFunction(args);
+
+    std::string methodName = "ccc";
+    gs::ObjectIndices indices = list_of(2)(0);
+    gs::SharedExpression expr(new gs::ExpressionMock);
+    EXPECT_CALL(*exprFactory, createMethodCall(1, methodName, indices))
+        .WillOnce(Return(expr));
+    EXPECT_CALL(*stmtFactory, createReturn(expr))
+        .WillOnce(Return(stmt));
+    EXPECT_CALL(*function, addStatement(stmt));
+
+    gs::FunctionArgs callArgs = list_of(args[indices[0]])(args[indices[1]]);
+    stmtHandler.returnStmt(9, args[1], methodName, callArgs);
+}

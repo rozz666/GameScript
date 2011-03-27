@@ -9,8 +9,10 @@
 #include <gs/ScriptParser.hpp>
 #include <gmock/gmock.h>
 #include <gs/test/unit/StatementHandlerMock.hpp>
+#include <boost/assign/list_of.hpp>
 
 using namespace testing;
+using boost::assign::list_of;
 
 struct gs_ScriptParser : testing::Test
 {
@@ -34,8 +36,7 @@ TEST_F(gs_ScriptParser, functionDefs)
         InSequence seq;
         gs::FunctionArgs args;
         EXPECT_CALL(*statementHandler, functionDef(1, "functionName1", args));
-        args.push_back("xyz5");
-        args.push_back("y");
+        args = list_of("xyz5")("y");
         EXPECT_CALL(*statementHandler, functionDef(3, "functionName2", args));
         EXPECT_CALL(*statementHandler, eof(4));
     }
@@ -61,8 +62,7 @@ TEST_F(gs_ScriptParser, methodCall)
         InSequence seq;
         gs::FunctionArgs args;
         EXPECT_CALL(*statementHandler, methodCall(1, "abc", "xyz", args));
-        args.push_back("x");
-        args.push_back("y");
+        args = list_of("x")("y");
         EXPECT_CALL(*statementHandler, methodCall(2, "o", "m", args));
         EXPECT_CALL(*statementHandler, eof(_));
     }
@@ -77,6 +77,20 @@ TEST_F(gs_ScriptParser, returnStatement)
         gs::FunctionArgs args;
         EXPECT_CALL(*statementHandler, returnStmt(1, "x"));
         EXPECT_CALL(*statementHandler, returnStmt(2, "zzz"));
+        EXPECT_CALL(*statementHandler, eof(_));
+    }
+    parse();
+}
+
+TEST_F(gs_ScriptParser, returnStatementMethodCall)
+{
+    source = " return x.m() \nreturn zzz.dd(uu, bb) ";
+    {
+        InSequence seq;
+        gs::FunctionArgs args;
+        EXPECT_CALL(*statementHandler, returnStmt(1, "x", "m", args));
+        args = list_of("uu")("bb");
+        EXPECT_CALL(*statementHandler, returnStmt(2, "zzz", "dd", args));
         EXPECT_CALL(*statementHandler, eof(_));
     }
     parse();

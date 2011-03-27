@@ -52,4 +52,12 @@ void ScriptStatementHandler::returnStmt(unsigned line, const std::string& object
     function->addStatement(statementFactory->createReturn(expressionFactory->createObject(indexOfArg(object))));
 }
 
+void ScriptStatementHandler::returnStmt(
+    unsigned line, const std::string& object, const std::string& method, const FunctionArgs& args)
+{
+    ObjectIndices indices = findObjectIndices(args);
+    SharedExpression expr = expressionFactory->createMethodCall(indexOfArg(object), method, indices);
+    function->addStatement(statementFactory->createReturn(expr));
+}
+
 }
