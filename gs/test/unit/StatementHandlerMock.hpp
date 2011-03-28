@@ -24,6 +24,9 @@ struct StatementHandlerMock : StatementHandler
     MOCK_METHOD2(returnStmt, void(unsigned, const std::string&));
     MOCK_METHOD4(returnStmt, void(unsigned, const std::string&, const std::string&, const gs::FunctionArgs&));
     MOCK_METHOD2(variableDef, void(unsigned, const std::string&));
+    MOCK_METHOD3(variableDef, void(unsigned, const std::string&, const std::string&));
+    MOCK_METHOD5(
+        variableDef, void(unsigned, const std::string&, const std::string&, const std::string&, const gs::FunctionArgs&));
 };
 
 typedef boost::shared_ptr<StatementHandlerMock> SharedStatementHandlerMock;

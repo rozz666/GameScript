@@ -107,3 +107,16 @@ TEST_F(gs_ScriptParser, defVar)
     }
     parse();
 }
+
+TEST_F(gs_ScriptParser, defVarWithExpr)
+{
+    source = " var x = y \n var z = o.m(a, b) ";
+    {
+        InSequence seq;
+        EXPECT_CALL(*statementHandler, variableDef(1, "x", "y"));
+        gs::FunctionArgs args = list_of("a")("b");
+        EXPECT_CALL(*statementHandler, variableDef(2, "z", "o", "m", args));
+        EXPECT_CALL(*statementHandler, eof(_));
+    }
+    parse();
+}
