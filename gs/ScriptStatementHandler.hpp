@@ -35,6 +35,7 @@ public:
     virtual void returnStmt(unsigned line, const std::string& object);
     virtual void returnStmt(
         unsigned line, const std::string& object, const std::string& method, const FunctionArgs& args);
+    virtual void variableDef(unsigned line, const std::string& name) { }
 private:
     SharedScriptInterface script;
     SharedFunctionFactory functionFactory;

@@ -30,6 +30,7 @@ public:
     virtual void returnStmt(unsigned line, const std::string& object) = 0;
     virtual void returnStmt(
         unsigned line, const std::string& object, const std::string& method, const FunctionArgs& args) = 0;
+    virtual void variableDef(unsigned line, const std::string& name) = 0;
 protected:
     StatementHandler() { }
     StatementHandler(const StatementHandler& ) { }

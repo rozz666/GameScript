@@ -95,3 +95,15 @@ TEST_F(gs_ScriptParser, returnStatementMethodCall)
     }
     parse();
 }
+
+TEST_F(gs_ScriptParser, defVar)
+{
+    source = " var abc \n var cde ";
+    {
+        InSequence seq;
+        EXPECT_CALL(*statementHandler, variableDef(1, "abc"));
+        EXPECT_CALL(*statementHandler, variableDef(2, "cde"));
+        EXPECT_CALL(*statementHandler, eof(_));
+    }
+    parse();
+}

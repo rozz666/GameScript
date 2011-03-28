@@ -76,11 +76,13 @@ void ScriptParser::parseLine(unsigned lineNo, const std::string& line)
         identifier >> "." >> identifier >> "(" >> -(identifier % ",") >> ")" >> qi::eoi;
     Rule<std::string>::Type returnStmtRule = "return" >> identifier >> qi::eoi;
     Rule<MethodCall>::Type returnStmtMethodCallRule = "return" >> methodCallRule;
+    Rule<std::string>::Type varDef = "var" >> identifier >> qi::eoi;
 
     FunctionDef functionDef;
     MethodCall methodCall;
     MethodCall returnMethodCall;
     std::string objectName;
+    std::string varName;
 
     if (qi::phrase_parse(line.begin(), line.end(), functionDefRule, ascii::space, functionDef))
     {
@@ -101,6 +103,10 @@ void ScriptParser::parseLine(unsigned lineNo, const std::string& line)
     else if (qi::phrase_parse(line.begin(), line.end(), returnStmtMethodCallRule, ascii::space, returnMethodCall))
     {
         stmtHandler->returnStmt(lineNo, returnMethodCall.object, returnMethodCall.method, returnMethodCall.args);
+    }
+    else if (qi::phrase_parse(line.begin(), line.end(), varDef, ascii::space, varName))
+    {
+        stmtHandler->variableDef(lineNo, varName);
     }
 }
 
