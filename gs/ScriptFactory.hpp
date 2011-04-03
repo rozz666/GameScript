@@ -10,7 +10,7 @@
 #define GS_SCRIPTFACTORY_HPP
 
 #include <boost/shared_ptr.hpp>
-#include <gs/ScriptInterface.hpp>
+#include <gs/IScript.hpp>
 
 namespace gs
 {
@@ -18,7 +18,7 @@ namespace gs
 class ScriptFactory
 {
 public:
-    virtual SharedScriptInterface createScript();
+    virtual SharedIScript createScript();
 };
 
 typedef boost::shared_ptr<ScriptFactory> SharedScriptFactory;

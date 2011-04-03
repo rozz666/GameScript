@@ -6,8 +6,8 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#ifndef GS_STATEMENTHANDLER_HPP
-#define GS_STATEMENTHANDLER_HPP
+#ifndef GS_ISTATEMENTHANDLER_HPP
+#define GS_ISTATEMENTHANDLER_HPP
 
 #include <boost/shared_ptr.hpp>
 #include <vector>
@@ -18,10 +18,10 @@ namespace gs
 
 typedef std::vector<std::string> FunctionArgs;
 
-class StatementHandler
+class IStatementHandler
 {
 public:
-    virtual ~StatementHandler() { }
+    virtual ~IStatementHandler() { }
     virtual void functionDef(unsigned line, const std::string& name, const FunctionArgs& args) = 0;
     virtual void end(unsigned line) = 0;
     virtual void eof(unsigned line) = 0;
@@ -36,12 +36,12 @@ public:
         unsigned line, const std::string& name, const std::string& object,
         const std::string& method, const FunctionArgs& args) = 0;
 protected:
-    StatementHandler() { }
-    StatementHandler(const StatementHandler& ) { }
-    StatementHandler& operator=(const StatementHandler& ) { return *this; }
+    IStatementHandler() { }
+    IStatementHandler(const IStatementHandler& ) { }
+    IStatementHandler& operator=(const IStatementHandler& ) { return *this; }
 };
 
-typedef boost::shared_ptr<StatementHandler> SharedStatementHandler;
+typedef boost::shared_ptr<IStatementHandler> SharedIStatementHandler;
 
 }
-#endif /* GS_STATEMENTHANDLER_HPP */
+#endif /* GS_ISTATEMENTHANDLER_HPP */

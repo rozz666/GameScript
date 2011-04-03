@@ -6,7 +6,7 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#include <gs/ScriptParser.hpp>
+#include <gs/Parser.hpp>
 #include <gmock/gmock.h>
 #include <gs/test/unit/StatementHandlerMock.hpp>
 #include <boost/assign/list_of.hpp>
@@ -18,7 +18,7 @@ struct gs_ScriptParser : testing::Test
 {
     std::string source;
     gs::SharedStatementHandlerMock statementHandler;
-    gs::ScriptParser parser;
+    gs::Parser parser;
 
     gs_ScriptParser()
         : statementHandler(new gs::StatementHandlerMock), parser(statementHandler) { }

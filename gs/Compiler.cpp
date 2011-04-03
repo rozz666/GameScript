@@ -6,16 +6,16 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#include <gs/ScriptCompiler.hpp>
+#include <gs/Compiler.hpp>
 #include <gs/Script.hpp>
 
 namespace gs
 {
 
-SharedScriptInterface ScriptCompiler::compile(const std::string& source)
+SharedIScript Compiler::compile(const std::string& source)
 {
-    SharedScriptInterface script = scriptFactory->createScript();
-    SharedParser parser = parserFactory->createParser(script);
+    SharedIScript script = scriptFactory->createScript();
+    SharedIParser parser = parserFactory->createParser(script);
     parser->parse(source);
     return script;
 }

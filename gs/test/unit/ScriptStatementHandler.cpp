@@ -8,7 +8,7 @@
 //
 #include <gs/ScriptStatementHandler.hpp>
 #include <gmock/gmock.h>
-#include <gs/test/unit/ScriptInterfaceMock.hpp>
+#include <gs/test/unit/ScriptMock.hpp>
 #include <gs/test/unit/FunctionFactoryMock.hpp>
 #include <gs/test/unit/FunctionMock.hpp>
 #include <gs/test/unit/StatementFactoryMock.hpp>
@@ -25,14 +25,14 @@ struct gs_ScriptStatementHandler : testing::Test
     gs::SharedFunctionMock function;
     gs::SharedFunctionFactoryMock functionFactory;
     gs::SharedStatementFactoryMock stmtFactory;
-    gs::SharedScriptInterfaceMock script;
+    gs::SharedScriptMock script;
     gs::SharedExpressionFactoryMock exprFactory;
     gs::ScriptStatementHandler stmtHandler;
-    gs::SharedStatement stmt;
+    gs::SharedIStatement stmt;
 
     gs_ScriptStatementHandler()
         : function(new gs::FunctionMock), functionFactory(new gs::FunctionFactoryMock),
-        stmtFactory(new gs::StatementFactoryMock), script(new gs::ScriptInterfaceMock),
+        stmtFactory(new gs::StatementFactoryMock), script(new gs::ScriptMock),
         exprFactory(new gs::ExpressionFactoryMock),
         stmtHandler(script, functionFactory, stmtFactory, exprFactory), stmt(new gs::StatementStub) { }
 
@@ -53,7 +53,7 @@ TEST_F(gs_ScriptStatementHandler, emptyFunction)
 
     stmtHandler.functionDef(1, functionName, gs::FunctionArgs());
 
-    EXPECT_CALL(*script, addFunction(gs::SharedFunction(function)));
+    EXPECT_CALL(*script, addFunction(gs::SharedIFunction(function)));
 
     stmtHandler.end(2);
 }
@@ -91,7 +91,7 @@ TEST_F(gs_ScriptStatementHandler, returnObject)
     gs::FunctionArgs args = list_of("abc")("def");
     setupFunction(args);
     unsigned objectIndex = 1;
-    gs::SharedExpression expr(new gs::ExpressionMock);
+    gs::SharedIExpression expr(new gs::ExpressionMock);
     EXPECT_CALL(*exprFactory, createObject(objectIndex))
         .WillOnce(Return(expr));
     EXPECT_CALL(*stmtFactory, createReturn(expr))
@@ -108,7 +108,7 @@ TEST_F(gs_ScriptStatementHandler, returnMethodCall)
 
     std::string methodName = "ccc";
     gs::ObjectIndices indices = list_of(2)(0);
-    gs::SharedExpression expr(new gs::ExpressionMock);
+    gs::SharedIExpression expr(new gs::ExpressionMock);
     EXPECT_CALL(*exprFactory, createMethodCall(1, methodName, indices))
         .WillOnce(Return(expr));
     EXPECT_CALL(*stmtFactory, createReturn(expr))

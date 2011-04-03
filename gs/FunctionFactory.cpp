@@ -11,10 +11,10 @@
 namespace gs
 {
 
-SharedFunction FunctionFactory::createFunction(const std::string& name)
+SharedIFunction FunctionFactory::createFunction(const std::string& name)
 {
-    SharedVariableTable vt(new ScriptVariableTable);
-    return SharedFunction(new ScriptFunction(name, vt));
+    SharedIVariableTable vt(new VariableTable);
+    return SharedIFunction(new ScriptFunction(name, vt));
 }
 
 }

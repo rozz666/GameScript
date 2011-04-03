@@ -17,8 +17,8 @@ namespace gs
 
 struct ExpressionFactoryMock : ExpressionFactory
 {
-    MOCK_METHOD3(createMethodCall, SharedExpression(unsigned, const std::string&, const ObjectIndices&));
-    MOCK_METHOD1(createObject, SharedExpression(unsigned));
+    MOCK_METHOD3(createMethodCall, SharedIExpression(unsigned, const std::string&, const ObjectIndices&));
+    MOCK_METHOD1(createObject, SharedIExpression(unsigned));
 };
 
 typedef boost::shared_ptr<ExpressionFactoryMock> SharedExpressionFactoryMock;

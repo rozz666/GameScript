@@ -11,7 +11,7 @@
 
 #include <gs/ScriptFunction.hpp>
 #include <boost/shared_ptr.hpp>
-#include <gs/ScriptVariableTable.hpp>
+#include <gs/VariableTable.hpp>
 
 namespace gs
 {
@@ -19,7 +19,7 @@ namespace gs
 class FunctionFactory
 {
 public:
-    virtual SharedFunction createFunction(const std::string& name);
+    virtual SharedIFunction createFunction(const std::string& name);
 };
 
 typedef boost::shared_ptr<FunctionFactory> SharedFunctionFactory;

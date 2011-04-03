@@ -17,7 +17,7 @@ struct LocalVars : gs::ATFixture
 
 TEST_F(LocalVars, argRefs)
 {
-    gs::SharedScriptInterface s = loadScript("localVar1.gs");
+    gs::SharedIScript s = loadScript("localVar1.gs");
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
     EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod2(args[2], args[1]));
@@ -26,7 +26,7 @@ TEST_F(LocalVars, argRefs)
 
 TEST_F(LocalVars, returnValueRef)
 {
-    gs::SharedScriptInterface s = loadScript("localVar2.gs");
+    gs::SharedIScript s = loadScript("localVar2.gs");
     gs::ObjectRef ret(new gs::ObjectStub);
     EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod1())
         .WillOnce(Return(ret));
@@ -35,7 +35,7 @@ TEST_F(LocalVars, returnValueRef)
 
 TEST_F(LocalVars, varRef)
 {
-    gs::SharedScriptInterface s = loadScript("localVar3.gs");
+    gs::SharedIScript s = loadScript("localVar3.gs");
     gs::ObjectRef ret(new gs::ObjectStub);
     EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod1())
         .WillOnce(Return(ret));
@@ -44,14 +44,14 @@ TEST_F(LocalVars, varRef)
 
 TEST_F(LocalVars, defaultVars)
 {
-    gs::SharedScriptInterface s = loadScript("localVar4.gs");
+    gs::SharedIScript s = loadScript("localVar4.gs");
     EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod2(gs::null, gs::null));
     s->callFunction("localVarTest4", args);
 }
 
 TEST_F(LocalVars, varAssignment)
 {
-    gs::SharedScriptInterface s = loadScript("localVar5.gs");
+    gs::SharedIScript s = loadScript("localVar5.gs");
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
     EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod2(args[1], args[1]));
     s->callFunction("localVarTest5", args);
@@ -59,7 +59,7 @@ TEST_F(LocalVars, varAssignment)
 
 TEST_F(LocalVars, argAssignment)
 {
-    gs::SharedScriptInterface s = loadScript("localVar6.gs");
+    gs::SharedIScript s = loadScript("localVar6.gs");
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
     args.push_back(gs::ObjectRef(new gs::ObjectStub));
     EXPECT_CALL(static_cast<gs::MappedObjectMock&>(*obj), testMethod2(args[2], args[1]));

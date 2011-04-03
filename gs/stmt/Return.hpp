@@ -9,22 +9,22 @@
 #ifndef GS_STMT_RETURN_HPP
 #define GS_STMT_RETURN_HPP
 
+#include <gs/IStatement.hpp>
+#include <gs/IExpression.hpp>
 #include <boost/shared_ptr.hpp>
-#include <gs/Statement.hpp>
-#include <gs/Expression.hpp>
 
 namespace gs
 {
 namespace stmt
 {
 
-class Return : public Statement
+class Return : public IStatement
 {
 public:
-    Return(SharedExpression expr) : expr(expr) { }
-    virtual boost::optional<ObjectRef> run(SharedVariableTable vt);
+    Return(SharedIExpression expr) : expr(expr) { }
+    virtual boost::optional<ObjectRef> run(SharedIVariableTable vt);
 private:
-    SharedExpression expr;
+    SharedIExpression expr;
 };
 
 typedef boost::shared_ptr<Return> SharedReturn;

@@ -9,25 +9,25 @@
 #ifndef GS_SCRIPTFUNCTION_HPP
 #define GS_SCRIPTFUNCTION_HPP
 
-#include <gs/Function.hpp>
-#include <gs/Statement.hpp>
-#include <gs/VariableTable.hpp>
+#include <gs/IFunction.hpp>
+#include <gs/IStatement.hpp>
+#include <gs/IVariableTable.hpp>
 #include <boost/shared_ptr.hpp>
 
 namespace gs
 {
 
-class ScriptFunction : public Function
+class ScriptFunction : public IFunction
 {
 public:
-    ScriptFunction(const std::string& name, SharedVariableTable vt) : name_(name), vt_(vt) { }
+    ScriptFunction(const std::string& name, SharedIVariableTable vt) : name_(name), vt_(vt) { }
     virtual std::string getName() const;
     virtual ObjectRef run(const CallArgs& args);
-    virtual void addStatement(SharedStatement stmt);
+    virtual void addStatement(SharedIStatement stmt);
 private:
     std::string name_;
-    SharedVariableTable vt_;
-    std::vector<SharedStatement> stmts_;
+    SharedIVariableTable vt_;
+    std::vector<SharedIStatement> stmts_;
     void setArgs(const CallArgs& args);
     ObjectRef runStatements();
 };

@@ -8,7 +8,7 @@
 //
 #ifndef GS_ATFIXTURE_HPP
 #define GS_ATFIXTURE_HPP
-#include <gs/Object.hpp>
+#include <gs/IObject.hpp>
 #include <gs/ScriptCompilerFactory.hpp>
 #include <gs/test/acceptance/MappedObjectMock.hpp>
 #include <gs/test/defaultValues.hpp>
@@ -39,9 +39,9 @@ struct ATFixture : testing::Test
         return text;
     }
 
-    gs::SharedScriptInterface loadScript(const std::string& path)
+    gs::SharedIScript loadScript(const std::string& path)
     {
-        gs::SharedCompiler compiler = gs::ScriptCompilerFactory().createCompiler();
+        gs::SharedICompiler compiler = gs::ScriptCompilerFactory().createCompiler();
         return compiler->compile(loadFile("gs/test/acceptance/scripts/" + path));
     }
 };

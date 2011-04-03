@@ -9,16 +9,16 @@
 #ifndef GS_OBJECTMAPPER_HPP
 #define GS_OBJECTMAPPER_HPP
 
+#include <gs/IObject.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/unordered_map.hpp>
 #include <string>
-#include <gs/Object.hpp>
 
 namespace gs
 {
 
 template <typename ObjectType>
-class ObjectMapper : public Object
+class ObjectMapper : public IObject
 {
 public:
     virtual ObjectRef callMethod(const std::string& name, const gs::CallArgs& args)

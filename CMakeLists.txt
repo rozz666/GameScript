@@ -28,14 +28,14 @@ add_library(
 add_library(
     gscore STATIC
     gs/Script.cpp
-    gs/ScriptParser.cpp
+    gs/Parser.cpp
     gs/ScriptFunction.cpp
     gs/stmt/CallMethod.cpp
-    gs/ScriptVariableTable.cpp
+    gs/VariableTable.cpp
     gs/ScriptFactory.cpp
     gs/ParserFactory.cpp
     gs/FunctionFactory.cpp
-    gs/ScriptCompiler.cpp
+    gs/Compiler.cpp
     gs/ScriptCompilerFactory.cpp
     gs/ScriptStatementHandler.cpp
     gs/StatementFactory.cpp
@@ -50,12 +50,12 @@ add_executable(
     gs/test/unit/main.cpp
     gs/test/GoogleTestController.cpp
     gs/test/unit/Script.cpp
-    gs/test/unit/ScriptParser.cpp
+    gs/test/unit/Parser.cpp
     gs/test/unit/ScriptFunction.cpp
     gs/test/unit/stmt/CallMethod.cpp
     gs/test/unit/ObjectMapper.cpp
-    gs/test/unit/ScriptVariableTable.cpp
-    gs/test/unit/ScriptCompiler.cpp
+    gs/test/unit/VariableTable.cpp
+    gs/test/unit/Compiler.cpp
     gs/test/unit/ScriptStatementHandler.cpp
     gs/test/unit/stmt/Return.cpp
     gs/test/unit/expr/Object.cpp

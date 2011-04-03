@@ -6,32 +6,32 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#ifndef GS_FUNCTION_HPP
-#define GS_FUNCTION_HPP
+#ifndef GS_IFUNCTION_HPP
+#define GS_IFUNCTION_HPP
 
-#include <gs/Object.hpp>
+#include <gs/IObject.hpp>
+#include <gs/IStatement.hpp>
 #include <vector>
 #include <string>
 #include <boost/shared_ptr.hpp>
-#include <gs/Statement.hpp>
 
 namespace gs
 {
 
-class Function
+class IFunction
 {
 public:
-    virtual ~Function() { }
+    virtual ~IFunction() { }
     virtual std::string getName() const = 0;
     virtual ObjectRef run(const CallArgs& args) = 0;
-    virtual void addStatement(SharedStatement stmt) = 0;
+    virtual void addStatement(SharedIStatement stmt) = 0;
 protected:
-    Function() { }
-    Function(const Function& ) { }
-    Function& operator=(const Function& ) { return *this; }
+    IFunction() { }
+    IFunction(const IFunction& ) { }
+    IFunction& operator=(const IFunction& ) { return *this; }
 };
 
-typedef boost::shared_ptr<Function> SharedFunction;
+typedef boost::shared_ptr<IFunction> SharedIFunction;
 
 }
-#endif /* GS_FUNCTION_HPP */
+#endif /* GS_IFUNCTION_HPP */

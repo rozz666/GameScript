@@ -10,8 +10,8 @@
 #define GS_EXPRESSIONFACTORY_HPP
 
 #include <boost/shared_ptr.hpp>
-#include <gs/Expression.hpp>
-#include <gs/Statement.hpp>
+#include <gs/IExpression.hpp>
+#include <gs/IStatement.hpp>
 
 namespace gs
 {
@@ -19,8 +19,8 @@ namespace gs
 class ExpressionFactory
 {
 public:
-    virtual SharedExpression createObject(unsigned objectIndex);
-    virtual SharedExpression createMethodCall(
+    virtual SharedIExpression createObject(unsigned objectIndex);
+    virtual SharedIExpression createMethodCall(
         unsigned objectIndex, const std::string& methodName, const ObjectIndices& indices);
 };
 

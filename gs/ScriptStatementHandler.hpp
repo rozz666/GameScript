@@ -9,21 +9,21 @@
 #ifndef GS_SCRIPTSTATEMENTHANDLER_HPP
 #define GS_SCRIPTSTATEMENTHANDLER_HPP
 
-#include <boost/shared_ptr.hpp>
-#include <gs/StatementHandler.hpp>
+#include <gs/IStatementHandler.hpp>
 #include <gs/FunctionFactory.hpp>
-#include <gs/ScriptInterface.hpp>
+#include <gs/IScript.hpp>
 #include <gs/StatementFactory.hpp>
 #include <gs/ExpressionFactory.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace gs
 {
 
-class ScriptStatementHandler : public StatementHandler
+class ScriptStatementHandler : public IStatementHandler
 {
 public:
     ScriptStatementHandler(
-        SharedScriptInterface script, SharedFunctionFactory functionFactory, SharedStatementFactory statementFactory,
+        SharedIScript script, SharedFunctionFactory functionFactory, SharedStatementFactory statementFactory,
         SharedExpressionFactory expressionFactory)
         : script(script), functionFactory(functionFactory), statementFactory(statementFactory),
         expressionFactory(expressionFactory) { }
@@ -41,11 +41,11 @@ public:
         unsigned int line, const std::string& name, const std::string& object,
         const std::string& method, const gs::FunctionArgs& args) { }
 private:
-    SharedScriptInterface script;
+    SharedIScript script;
     SharedFunctionFactory functionFactory;
     SharedStatementFactory statementFactory;
     SharedExpressionFactory expressionFactory;
-    SharedFunction function;
+    SharedIFunction function;
     FunctionArgs functionArgs;
     unsigned indexOfArg(const std::string& arg);
     ObjectIndices findObjectIndices(const gs::FunctionArgs& args);

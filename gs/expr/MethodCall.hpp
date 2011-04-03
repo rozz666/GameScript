@@ -9,21 +9,21 @@
 #ifndef GS_EXPR_METHODCALL_HPP
 #define GS_EXPR_METHODCALL_HPP
 
+#include <gs/IExpression.hpp>
+#include <gs/IStatement.hpp>
 #include <boost/shared_ptr.hpp>
-#include <gs/Expression.hpp>
-#include <gs/Statement.hpp>
 
 namespace gs
 {
 namespace expr
 {
 
-class MethodCall : public Expression
+class MethodCall : public IExpression
 {
 public:
     MethodCall(unsigned objectIndex, const std::string& methodName, const ObjectIndices& indices)
         : objectIndex_(objectIndex), methodName_(methodName), indices_(indices) { }
-    virtual ObjectRef eval(SharedVariableTable vt);
+    virtual ObjectRef eval(SharedIVariableTable vt);
 private:
     unsigned objectIndex_;
     std::string methodName_;

@@ -9,7 +9,7 @@
 #ifndef GS_STMT_CALLMETHOD_HPP
 #define GS_STMT_CALLMETHOD_HPP
 
-#include <gs/Statement.hpp>
+#include <gs/IStatement.hpp>
 #include <string>
 #include <boost/shared_ptr.hpp>
 
@@ -18,12 +18,12 @@ namespace gs
 namespace stmt
 {
 
-class CallMethod : public Statement
+class CallMethod : public IStatement
 {
 public:
     CallMethod(unsigned objectIndex, const std::string& methodName, const ObjectIndices& indices)
         : objectIndex_(objectIndex), methodName_(methodName), indices_(indices) { }
-    virtual boost::optional<ObjectRef> run(SharedVariableTable vt);
+    virtual boost::optional<ObjectRef> run(SharedIVariableTable vt);
 private:
     unsigned objectIndex_;
     std::string methodName_;

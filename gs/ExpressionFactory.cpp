@@ -13,15 +13,15 @@
 namespace gs
 {
 
-SharedExpression ExpressionFactory::createObject(unsigned objectIndex)
+SharedIExpression ExpressionFactory::createObject(unsigned objectIndex)
 {
-    return SharedExpression(new expr::Object(objectIndex));
+    return SharedIExpression(new expr::Object(objectIndex));
 }
 
-SharedExpression ExpressionFactory::createMethodCall(
+SharedIExpression ExpressionFactory::createMethodCall(
     unsigned objectIndex, const std::string& methodName, const ObjectIndices& indices)
 {
-    return SharedExpression(new expr::MethodCall(objectIndex, methodName, indices));
+    return SharedIExpression(new expr::MethodCall(objectIndex, methodName, indices));
 }
 
 }

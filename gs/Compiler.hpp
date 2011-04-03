@@ -9,21 +9,23 @@
 #ifndef GS_COMPILER_HPP
 #define GS_COMPILER_HPP
 
+#include <gs/ICompiler.hpp>
+#include <gs/ScriptFactory.hpp>
+#include <gs/ParserFactory.hpp>
 #include <boost/shared_ptr.hpp>
-#include <gs/ScriptInterface.hpp>
 
 namespace gs
 {
 
-class Compiler
+class Compiler : public ICompiler
 {
 public:
-    virtual ~Compiler() { }
-    virtual SharedScriptInterface compile(const std::string& source) = 0;
-protected:
-    Compiler() { }
-    Compiler(const Compiler& ) { }
-    Compiler& operator=(const Compiler& ) { return *this; }
+    Compiler(SharedScriptFactory scriptFactory, SharedParserFactory parserFactory)
+        : scriptFactory(scriptFactory), parserFactory(parserFactory) { }
+    virtual SharedIScript compile(const std::string& source);
+private:
+    SharedScriptFactory scriptFactory;
+    SharedParserFactory parserFactory;
 };
 
 typedef boost::shared_ptr<Compiler> SharedCompiler;

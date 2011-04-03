@@ -9,15 +9,15 @@
 #ifndef GS_STATEMENTMOCK_HPP
 #define GS_STATEMENTMOCK_HPP
 
-#include <gs/Statement.hpp>
+#include <gs/IStatement.hpp>
 #include <gmock/gmock.h>
 
 namespace gs
 {
 
-struct StatementMock : Statement
+struct StatementMock : IStatement
 {
-    MOCK_METHOD1(run, boost::optional<ObjectRef>(SharedVariableTable));
+    MOCK_METHOD1(run, boost::optional<ObjectRef>(SharedIVariableTable));
 };
 
 typedef boost::shared_ptr<StatementMock> SharedStatementMock;

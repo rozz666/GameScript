@@ -40,9 +40,9 @@ TEST_F(gs_ScriptFunction, addAndRunTwoStatements)
     sf.addStatement(st2);
     {
         InSequence seq;
-        EXPECT_CALL(*st1, run(gs::SharedVariableTable(vt)))
+        EXPECT_CALL(*st1, run(gs::SharedIVariableTable(vt)))
             .WillOnce(Return(boost::none));
-        EXPECT_CALL(*st2, run(gs::SharedVariableTable(vt)))
+        EXPECT_CALL(*st2, run(gs::SharedIVariableTable(vt)))
             .WillOnce(Return(boost::none));
     }
     ASSERT_TRUE(sf.run(args) == gs::null);

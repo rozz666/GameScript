@@ -9,22 +9,20 @@
 #ifndef GS_VARIABLETABLE_HPP
 #define GS_VARIABLETABLE_HPP
 
+#include <gs/IVariableTable.hpp>
 #include <boost/shared_ptr.hpp>
-#include <gs/Object.hpp>
+#include <boost/unordered_map.hpp>
 
 namespace gs
 {
 
-class VariableTable
+class VariableTable : public IVariableTable
 {
 public:
-    virtual ~VariableTable() { }
-    virtual void set(unsigned index, ObjectRef ref) = 0;
-    virtual ObjectRef get(unsigned index) = 0;
-protected:
-    VariableTable() { }
-    VariableTable(const VariableTable& ) { }
-    VariableTable& operator=(const VariableTable& ) { return *this; }
+    virtual ObjectRef get(unsigned int index);
+    virtual void set(unsigned int index, ObjectRef ref);
+private:
+    boost::unordered_map<unsigned, ObjectRef> objects_;
 };
 
 typedef boost::shared_ptr<VariableTable> SharedVariableTable;

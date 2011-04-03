@@ -10,18 +10,18 @@
 #define GS_EXPR_OBJECT_HPP
 
 #include <boost/shared_ptr.hpp>
-#include <gs/Expression.hpp>
+#include <gs/IExpression.hpp>
 
 namespace gs
 {
 namespace expr
 {
 
-class Object : public Expression
+class Object : public IExpression
 {
 public:
     Object(unsigned objectIndex) : objectIndex(objectIndex) { }
-    virtual ObjectRef eval(SharedVariableTable vt);
+    virtual ObjectRef eval(SharedIVariableTable vt);
 private:
     unsigned objectIndex;
 };

@@ -6,22 +6,22 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#ifndef GS_SCRIPTINTERFACEMOCK_HPP
-#define GS_SCRIPTINTERFACEMOCK_HPP
+#ifndef GS_SCRIPTMOCK_HPP
+#define GS_SCRIPTMOCK_HPP
 
-#include <gs/ScriptInterface.hpp>
+#include <gs/IScript.hpp>
 #include <gmock/gmock.h>
 
 namespace gs
 {
 
-struct ScriptInterfaceMock : ScriptInterface
+struct ScriptMock : IScript
 {
-    MOCK_METHOD1(addFunction, void(SharedFunction));
+    MOCK_METHOD1(addFunction, void(SharedIFunction));
     MOCK_METHOD2(callFunction, ObjectRef(const std::string&, const gs::CallArgs&));
 };
 
-typedef boost::shared_ptr<ScriptInterfaceMock> SharedScriptInterfaceMock;
+typedef boost::shared_ptr<ScriptMock> SharedScriptMock;
 
 }
-#endif /* GS_SCRIPTINTERFACEMOCK_HPP */
+#endif /* GS_SCRIPTMOCK_HPP */

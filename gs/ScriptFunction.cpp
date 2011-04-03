@@ -26,7 +26,7 @@ ObjectRef ScriptFunction::run(const gs::CallArgs& args)
     return runStatements();
 }
 
-void ScriptFunction::addStatement(gs::SharedStatement stmt)
+void ScriptFunction::addStatement(gs::SharedIStatement stmt)
 {
     stmts_.push_back(stmt);
 }
@@ -40,7 +40,7 @@ void ScriptFunction::setArgs(const gs::CallArgs& args)
 
 ObjectRef ScriptFunction::runStatements()
 {
-    BOOST_FOREACH(gs::SharedStatement st, stmts_)
+    BOOST_FOREACH(gs::SharedIStatement st, stmts_)
     {
         if (boost::optional<ObjectRef> ret = st->run(vt_))
         {

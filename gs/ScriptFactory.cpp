@@ -12,7 +12,7 @@
 namespace gs
 {
 
-SharedScriptInterface ScriptFactory::createScript()
+SharedIScript ScriptFactory::createScript()
 {
     return SharedScript(new Script);
 }

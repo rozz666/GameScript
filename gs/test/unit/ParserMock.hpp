@@ -9,13 +9,13 @@
 #ifndef GS_PARSERMOCK_HPP
 #define GS_PARSERMOCK_HPP
 
-#include <gs/Parser.hpp>
+#include <gs/IParser.hpp>
 #include <gmock/gmock.h>
 
 namespace gs
 {
 
-struct ParserMock : Parser
+struct ParserMock : IParser
 {
     MOCK_METHOD1(parse, void(const std::string& text));
 };

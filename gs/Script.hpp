@@ -12,18 +12,18 @@
 #include <vector>
 #include <boost/shared_ptr.hpp>
 #include <boost/unordered_map.hpp>
-#include <gs/ScriptInterface.hpp>
+#include <gs/IScript.hpp>
 
 namespace gs
 {
 
-class Script : public ScriptInterface
+class Script : public IScript
 {
 public:
     virtual ObjectRef callFunction(const std::string& name, const CallArgs& args);
-    virtual void addFunction(SharedFunction f);
+    virtual void addFunction(SharedIFunction f);
 private:
-    typedef boost::unordered_map<std::string, SharedFunction> Functions;
+    typedef boost::unordered_map<std::string, SharedIFunction> Functions;
     Functions functions_;
 };
 

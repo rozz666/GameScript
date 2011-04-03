@@ -9,13 +9,13 @@
 #ifndef GS_VARIABLETABLEMOCK_HPP
 #define GS_VARIABLETABLEMOCK_HPP
 
-#include <gs/VariableTable.hpp>
+#include <gs/IVariableTable.hpp>
 #include <gmock/gmock.h>
 
 namespace gs
 {
 
-struct VariableTableMock : VariableTable
+struct VariableTableMock : IVariableTable
 {
     MOCK_METHOD2(set, void(unsigned, ObjectRef));
     MOCK_METHOD1(get, ObjectRef(unsigned));

@@ -10,7 +10,7 @@
 #define GS_SCRIPTCOMPILERFACTORY_HPP
 
 #include <boost/shared_ptr.hpp>
-#include <gs/Compiler.hpp>
+#include <gs/ICompiler.hpp>
 
 namespace gs
 {
@@ -18,7 +18,7 @@ namespace gs
 class ScriptCompilerFactory
 {
 public:
-    virtual SharedCompiler createCompiler();
+    virtual SharedICompiler createCompiler();
 };
 
 typedef boost::shared_ptr<ScriptCompilerFactory> SharedScriptCompilerFactory;

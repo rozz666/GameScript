@@ -9,15 +9,15 @@
 #ifndef GS_EXPRESSIONMOCK_HPP
 #define GS_EXPRESSIONMOCK_HPP
 
-#include <gs/Expression.hpp>
+#include <gs/IExpression.hpp>
 #include <gmock/gmock.h>
 
 namespace gs
 {
 
-struct ExpressionMock : Expression
+struct ExpressionMock : IExpression
 {
-    MOCK_METHOD1(eval, ObjectRef(SharedVariableTable));
+    MOCK_METHOD1(eval, ObjectRef(SharedIVariableTable));
 };
 
 typedef boost::shared_ptr<ExpressionMock> SharedExpressionMock;

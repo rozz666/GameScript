@@ -9,13 +9,13 @@
 #ifndef GS_STATEMENTHANDLERMOCK_HPP
 #define GS_STATEMENTHANDLERMOCK_HPP
 
-#include <gs/StatementHandler.hpp>
+#include <gs/IStatementHandler.hpp>
 #include <gmock/gmock.h>
 
 namespace gs
 {
 
-struct StatementHandlerMock : StatementHandler
+struct StatementHandlerMock : IStatementHandler
 {
     MOCK_METHOD3(functionDef, void(unsigned, const std::string&, const gs::FunctionArgs&));
     MOCK_METHOD1(end, void(unsigned));

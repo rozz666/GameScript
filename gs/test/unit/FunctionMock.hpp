@@ -9,17 +9,17 @@
 #ifndef GS_FUNCTIONMOCK_HPP
 #define GS_FUNCTIONMOCK_HPP
 
-#include <gs/Function.hpp>
+#include <gs/IFunction.hpp>
 #include <gmock/gmock.h>
 
 namespace gs
 {
 
-struct FunctionMock : Function
+struct FunctionMock : IFunction
 {
     MOCK_CONST_METHOD0(getName, std::string());
     MOCK_METHOD1(run, ObjectRef(const CallArgs& ));
-    MOCK_METHOD1(addStatement, void(SharedStatement));
+    MOCK_METHOD1(addStatement, void(SharedIStatement));
 };
 
 typedef boost::shared_ptr<FunctionMock> SharedFunctionMock;

@@ -17,7 +17,7 @@ namespace gs
 
 struct ParserFactoryMock : ParserFactory
 {
-    MOCK_METHOD1(createParser, SharedParser(SharedScriptInterface script));
+    MOCK_METHOD1(createParser, SharedIParser(SharedIScript script));
 };
 
 typedef boost::shared_ptr<ParserFactoryMock> SharedParserFactoryMock;

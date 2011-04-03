@@ -9,13 +9,13 @@
 #ifndef GS_OBJECTMOCK_HPP
 #define GS_OBJECTMOCK_HPP
 
-#include <gs/Object.hpp>
+#include <gs/IObject.hpp>
 #include <gmock/gmock.h>
 
 namespace gs
 {
 
-struct ObjectMock : Object
+struct ObjectMock : IObject
 {
     MOCK_METHOD2(callMethod, ObjectRef(const std::string&, const gs::CallArgs&));
 };

@@ -9,21 +9,26 @@
 #ifndef GS_PARSER_HPP
 #define GS_PARSER_HPP
 
+#include <gs/Script.hpp>
 #include <boost/shared_ptr.hpp>
-#include <string>
+#include <gs/IParser.hpp>
+#include <gs/IStatementHandler.hpp>
 
 namespace gs
 {
 
-class Parser
+class Parser : public IParser
 {
 public:
-    virtual ~Parser() { }
-    virtual void parse(const std::string& text) = 0;
-protected:
-    Parser() { }
-    Parser(const Parser& ) { }
-    Parser& operator=(const Parser& ) { return *this; }
+
+    Parser(SharedIStatementHandler stmtHandler)
+        : stmtHandler(stmtHandler) { }
+
+    virtual void parse(const std::string& text);
+
+private:
+    SharedIStatementHandler stmtHandler;
+    void parseLine(unsigned lineNo, const std::string& line);
 };
 
 typedef boost::shared_ptr<Parser> SharedParser;

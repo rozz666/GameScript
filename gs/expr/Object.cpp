@@ -13,7 +13,7 @@ namespace gs
 namespace expr
 {
 
-gs::ObjectRef Object::eval(gs::SharedVariableTable vt)
+gs::ObjectRef Object::eval(gs::SharedIVariableTable vt)
 {
     return vt->get(objectIndex);
 }

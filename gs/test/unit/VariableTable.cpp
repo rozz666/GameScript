@@ -6,9 +6,9 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#include <gs/ScriptVariableTable.hpp>
-#include <gmock/gmock.h>
+#include <gs/VariableTable.hpp>
 #include <gs/test/unit/ObjectStub.hpp>
+#include <gmock/gmock.h>
 
 using namespace testing;
 
@@ -18,7 +18,7 @@ struct gs_ScriptVariableTable : testing::Test
 
 TEST_F(gs_ScriptVariableTable, testGetSet)
 {
-    gs::ScriptVariableTable vt;
+    gs::VariableTable vt;
     gs::ObjectRef obj1(new gs::ObjectStub);
     gs::ObjectRef obj2(new gs::ObjectStub);
 

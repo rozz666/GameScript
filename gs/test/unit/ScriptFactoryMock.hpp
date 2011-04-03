@@ -17,7 +17,7 @@ namespace gs
 
 struct ScriptFactoryMock : ScriptFactory
 {
-    MOCK_METHOD0(createScript, SharedScriptInterface());
+    MOCK_METHOD0(createScript, SharedIScript());
 };
 
 typedef boost::shared_ptr<ScriptFactoryMock> SharedScriptFactoryMock;

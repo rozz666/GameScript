@@ -16,7 +16,7 @@ ObjectRef Script::callFunction(const std::string& name, const gs::CallArgs& args
     return functions_[name]->run(args);
 }
 
-void Script::addFunction(SharedFunction f)
+void Script::addFunction(SharedIFunction f)
 {
     functions_[f->getName()] = f;
 }

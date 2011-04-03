@@ -9,13 +9,13 @@
 #ifndef GS_OBJECTSTUB_HPP
 #define GS_OBJECTSTUB_HPP
 
-#include <gs/Object.hpp>
+#include <gs/IObject.hpp>
 #include <gmock/gmock.h>
 
 namespace gs
 {
 
-struct ObjectStub : gs::Object
+struct ObjectStub : gs::IObject
 {
     virtual ObjectRef callMethod(const std::string&, const gs::CallArgs&) { return ObjectRef(); }
 };

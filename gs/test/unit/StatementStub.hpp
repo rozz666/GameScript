@@ -9,14 +9,14 @@
 #ifndef GS_STATEMENTSTUB_HPP
 #define GS_STATEMENTSTUB_HPP
 
-#include <gs/Statement.hpp>
+#include <gs/IStatement.hpp>
 
 namespace gs
 {
 
-struct StatementStub : Statement
+struct StatementStub : IStatement
 {
-    virtual boost::optional<ObjectRef> run(SharedVariableTable vt) { return boost::none; }
+    virtual boost::optional<ObjectRef> run(SharedIVariableTable vt) { return boost::none; }
 };
 
 typedef boost::shared_ptr<StatementStub> SharedStatementStub;

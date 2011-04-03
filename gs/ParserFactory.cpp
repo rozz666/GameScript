@@ -7,19 +7,19 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 #include <gs/ParserFactory.hpp>
-#include <gs/ScriptParser.hpp>
+#include <gs/Parser.hpp>
 #include <gs/ScriptStatementHandler.hpp>
 
 namespace gs
 {
 
-SharedParser ParserFactory::createParser(SharedScriptInterface script)
+SharedIParser ParserFactory::createParser(SharedIScript script)
 {
     SharedFunctionFactory functionFactory(new FunctionFactory);
     SharedStatementFactory stmtFactory(new StatementFactory);
     SharedExpressionFactory exprFactory(new ExpressionFactory);
-    SharedStatementHandler stmtHandler(new ScriptStatementHandler(script, functionFactory, stmtFactory, exprFactory));
-    return SharedParser(new ScriptParser(stmtHandler));
+    SharedIStatementHandler stmtHandler(new ScriptStatementHandler(script, functionFactory, stmtFactory, exprFactory));
+    return SharedIParser(new Parser(stmtHandler));
 }
 
 }

@@ -13,7 +13,7 @@ namespace gs
 {
 namespace stmt
 {
-boost::optional<ObjectRef> Return::run(SharedVariableTable vt)
+boost::optional<ObjectRef> Return::run(SharedIVariableTable vt)
 {
     return expr->eval(vt);
 }

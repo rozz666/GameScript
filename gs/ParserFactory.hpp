@@ -10,8 +10,8 @@
 #define GS_PARSERFACTORY_HPP
 
 #include <boost/shared_ptr.hpp>
-#include <gs/Parser.hpp>
-#include <gs/ScriptInterface.hpp>
+#include <gs/IParser.hpp>
+#include <gs/IScript.hpp>
 
 namespace gs
 {
@@ -19,7 +19,7 @@ namespace gs
 class ParserFactory
 {
 public:
-    virtual SharedParser createParser(SharedScriptInterface script);
+    virtual SharedIParser createParser(SharedIScript script);
 };
 
 typedef boost::shared_ptr<ParserFactory> SharedParserFactory;

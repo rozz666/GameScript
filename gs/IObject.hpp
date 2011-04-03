@@ -6,8 +6,8 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#ifndef GS_OBJECT_HPP
-#define GS_OBJECT_HPP
+#ifndef GS_IOBJECT_HPP
+#define GS_IOBJECT_HPP
 
 #include <boost/shared_ptr.hpp>
 #include <vector>
@@ -15,24 +15,24 @@
 namespace gs
 {
 
-class Object;
+class IObject;
 
-typedef boost::shared_ptr<Object> SharedObject;
-typedef SharedObject ObjectRef;
+typedef boost::shared_ptr<IObject> SharedIObject;
+typedef SharedIObject ObjectRef;
 
 typedef std::vector<ObjectRef> CallArgs;
 
-class Object
+class IObject
 {
 public:
-    virtual ~Object() { }
+    virtual ~IObject() { }
     virtual ObjectRef callMethod(const std::string& name, const CallArgs& args) = 0;
 protected:
-    Object() { }
-    Object(const Object& ) { }
-    Object& operator=(const Object& ) { return *this; }
+    IObject() { }
+    IObject(const IObject& ) { }
+    IObject& operator=(const IObject& ) { return *this; }
 };
 
 
 }
-#endif /* GS_OBJECT_HPP */
+#endif /* GS_IOBJECT_HPP */

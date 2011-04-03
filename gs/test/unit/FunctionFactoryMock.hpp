@@ -17,7 +17,7 @@ namespace gs
 
 struct FunctionFactoryMock : FunctionFactory
 {
-    MOCK_METHOD1(createFunction, SharedFunction(const std::string&));
+    MOCK_METHOD1(createFunction, SharedIFunction(const std::string&));
 };
 
 typedef boost::shared_ptr<FunctionFactoryMock> SharedFunctionFactoryMock;

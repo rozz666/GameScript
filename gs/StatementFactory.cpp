@@ -13,15 +13,15 @@
 namespace gs
 {
 
-SharedStatement StatementFactory::createCallMethod(
+SharedIStatement StatementFactory::createCallMethod(
     unsigned int objectIndex, const std::string& methodName, const gs::ObjectIndices& indices)
 {
-    return SharedStatement(new stmt::CallMethod(objectIndex, methodName, indices));
+    return SharedIStatement(new stmt::CallMethod(objectIndex, methodName, indices));
 }
 
-SharedStatement StatementFactory::createReturn(SharedExpression expr)
+SharedIStatement StatementFactory::createReturn(SharedIExpression expr)
 {
-    return SharedStatement(new stmt::Return(expr));
+    return SharedIStatement(new stmt::Return(expr));
 }
 
 }

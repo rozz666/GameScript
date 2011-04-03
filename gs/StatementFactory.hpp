@@ -9,9 +9,9 @@
 #ifndef GS_STATEMENTFACTORY_HPP
 #define GS_STATEMENTFACTORY_HPP
 
-#include <gs/Statement.hpp>
+#include <gs/IStatement.hpp>
 #include <boost/shared_ptr.hpp>
-#include <gs/Expression.hpp>
+#include <gs/IExpression.hpp>
 
 namespace gs
 {
@@ -19,9 +19,9 @@ namespace gs
 class StatementFactory
 {
 public:
-    virtual SharedStatement createCallMethod(
+    virtual SharedIStatement createCallMethod(
         unsigned objectIndex, const std::string& methodName, const ObjectIndices& indices);
-    virtual SharedStatement createReturn(SharedExpression expr);
+    virtual SharedIStatement createReturn(SharedIExpression expr);
 };
 
 typedef boost::shared_ptr<StatementFactory> SharedStatementFactory;

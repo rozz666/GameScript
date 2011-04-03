@@ -14,10 +14,10 @@ namespace gs
 namespace stmt
 {
 
-boost::optional<ObjectRef> CallMethod::run(SharedVariableTable vt)
+boost::optional<ObjectRef> CallMethod::run(SharedIVariableTable vt)
 {
     CallArgs args(indices_.size());
-    std::transform(indices_.begin(), indices_.end(), args.begin(), boost::bind(&VariableTable::get, vt, _1));
+    std::transform(indices_.begin(), indices_.end(), args.begin(), boost::bind(&IVariableTable::get, vt, _1));
     vt->get(objectIndex_)->callMethod(methodName_, args);
     return boost::none;
 }

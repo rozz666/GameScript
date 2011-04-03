@@ -27,7 +27,7 @@ TEST_F(gs_stmt_Return, returnExpression)
     gs::SharedExpressionMock expr(new gs::ExpressionMock);
     gs::stmt::Return ret(expr);
 
-    EXPECT_CALL(*expr, eval(gs::SharedVariableTable(vt)))
+    EXPECT_CALL(*expr, eval(gs::SharedIVariableTable(vt)))
         .WillOnce(Return(obj));
     ASSERT_TRUE(ret.run(vt) == obj);
 }

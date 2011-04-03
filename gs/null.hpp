@@ -9,7 +9,7 @@
 #ifndef GS_NULL_HPP
 #define GS_NULL_HPP
 
-#include <gs/Object.hpp>
+#include <gs/IObject.hpp>
 
 namespace gs
 {

@@ -6,7 +6,7 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#include <gs/ScriptParser.hpp>
+#include <gs/Parser.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/fusion/adapted/struct/adapt_struct.hpp>
 #include <boost/variant.hpp>
@@ -86,7 +86,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 namespace gs
 {
 
-void ScriptParser::parse(const std::string& text)
+void Parser::parse(const std::string& text)
 {
     std::istringstream ss(text);
     std::string line;
@@ -99,7 +99,7 @@ void ScriptParser::parse(const std::string& text)
     stmtHandler->eof(lineNo);
 }
 
-void ScriptParser::parseLine(unsigned lineNo, const std::string& line)
+void Parser::parseLine(unsigned lineNo, const std::string& line)
 {
     namespace qi = boost::spirit::qi;
     namespace ascii = boost::spirit::ascii;
