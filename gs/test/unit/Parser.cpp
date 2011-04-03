@@ -14,13 +14,13 @@
 using namespace testing;
 using boost::assign::list_of;
 
-struct gs_ScriptParser : testing::Test
+struct gs_Parser : testing::Test
 {
     std::string source;
     gs::SharedStatementHandlerMock statementHandler;
     gs::Parser parser;
 
-    gs_ScriptParser()
+    gs_Parser()
         : statementHandler(new gs::StatementHandlerMock), parser(statementHandler) { }
 
     void parse()
@@ -29,7 +29,7 @@ struct gs_ScriptParser : testing::Test
     }
 };
 
-TEST_F(gs_ScriptParser, functionDefs)
+TEST_F(gs_Parser, functionDefs)
 {
     source = " def functionName1 ( )\n\ndef   functionName2(xyz5, y )\n";
     {
@@ -43,7 +43,7 @@ TEST_F(gs_ScriptParser, functionDefs)
     parse();
 }
 
-TEST_F(gs_ScriptParser, ends)
+TEST_F(gs_Parser, ends)
 {
     source = " end \nend";
     {
@@ -55,7 +55,7 @@ TEST_F(gs_ScriptParser, ends)
     parse();
 }
 
-TEST_F(gs_ScriptParser, methodCall)
+TEST_F(gs_Parser, methodCall)
 {
     source = " abc.xyz() \no.m(x, y) ";
     {
@@ -69,7 +69,7 @@ TEST_F(gs_ScriptParser, methodCall)
     parse();
 }
 
-TEST_F(gs_ScriptParser, returnStatement)
+TEST_F(gs_Parser, returnStatement)
 {
     source = " return x \nreturn zzz ";
     {
@@ -82,7 +82,7 @@ TEST_F(gs_ScriptParser, returnStatement)
     parse();
 }
 
-TEST_F(gs_ScriptParser, returnStatementMethodCall)
+TEST_F(gs_Parser, returnStatementMethodCall)
 {
     source = " return x.m() \nreturn zzz.dd(uu, bb) ";
     {
@@ -96,7 +96,7 @@ TEST_F(gs_ScriptParser, returnStatementMethodCall)
     parse();
 }
 
-TEST_F(gs_ScriptParser, defVar)
+TEST_F(gs_Parser, defVar)
 {
     source = " var abc \n var cde ";
     {
@@ -108,7 +108,7 @@ TEST_F(gs_ScriptParser, defVar)
     parse();
 }
 
-TEST_F(gs_ScriptParser, defVarWithExpr)
+TEST_F(gs_Parser, defVarWithExpr)
 {
     source = " var x = y \n var z = o.m(a, b) ";
     {

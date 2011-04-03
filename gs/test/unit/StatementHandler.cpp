@@ -6,8 +6,7 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#include <gs/ScriptStatementHandler.hpp>
-#include <gmock/gmock.h>
+#include <gs/StatementHandler.hpp>
 #include <gs/test/unit/ScriptMock.hpp>
 #include <gs/test/unit/FunctionFactoryMock.hpp>
 #include <gs/test/unit/FunctionMock.hpp>
@@ -15,22 +14,23 @@
 #include <gs/test/unit/StatementStub.hpp>
 #include <gs/test/unit/ExpressionFactoryMock.hpp>
 #include <gs/test/unit/ExpressionMock.hpp>
+#include <gmock/gmock.h>
 #include <boost/assign/list_of.hpp>
 
 using namespace testing;
 using boost::assign::list_of;
 
-struct gs_ScriptStatementHandler : testing::Test
+struct gs_StatementHandler : testing::Test
 {
     gs::SharedFunctionMock function;
     gs::SharedFunctionFactoryMock functionFactory;
     gs::SharedStatementFactoryMock stmtFactory;
     gs::SharedScriptMock script;
     gs::SharedExpressionFactoryMock exprFactory;
-    gs::ScriptStatementHandler stmtHandler;
+    gs::StatementHandler stmtHandler;
     gs::SharedIStatement stmt;
 
-    gs_ScriptStatementHandler()
+    gs_StatementHandler()
         : function(new gs::FunctionMock), functionFactory(new gs::FunctionFactoryMock),
         stmtFactory(new gs::StatementFactoryMock), script(new gs::ScriptMock),
         exprFactory(new gs::ExpressionFactoryMock),
@@ -45,7 +45,7 @@ struct gs_ScriptStatementHandler : testing::Test
     }
 };
 
-TEST_F(gs_ScriptStatementHandler, emptyFunction)
+TEST_F(gs_StatementHandler, emptyFunction)
 {
     std::string functionName = "asia";
     EXPECT_CALL(*functionFactory, createFunction(functionName))
@@ -58,7 +58,7 @@ TEST_F(gs_ScriptStatementHandler, emptyFunction)
     stmtHandler.end(2);
 }
 
-TEST_F(gs_ScriptStatementHandler, methodCallNoArgs)
+TEST_F(gs_StatementHandler, methodCallNoArgs)
 {
     gs::FunctionArgs args = list_of("xx");
     setupFunction(args);
@@ -71,7 +71,7 @@ TEST_F(gs_ScriptStatementHandler, methodCallNoArgs)
     stmtHandler.methodCall(5, args[0], methodName, gs::FunctionArgs());
 }
 
-TEST_F(gs_ScriptStatementHandler, methodCallWithArgs)
+TEST_F(gs_StatementHandler, methodCallWithArgs)
 {
     gs::FunctionArgs args = list_of("obj")("a")("b");
     setupFunction(args);
@@ -86,7 +86,7 @@ TEST_F(gs_ScriptStatementHandler, methodCallWithArgs)
     stmtHandler.methodCall(5, args[0], methodName, callArgs);
 }
 
-TEST_F(gs_ScriptStatementHandler, returnObject)
+TEST_F(gs_StatementHandler, returnObject)
 {
     gs::FunctionArgs args = list_of("abc")("def");
     setupFunction(args);
@@ -101,7 +101,7 @@ TEST_F(gs_ScriptStatementHandler, returnObject)
     stmtHandler.returnStmt(7, args[objectIndex]);
 }
 
-TEST_F(gs_ScriptStatementHandler, returnMethodCall)
+TEST_F(gs_StatementHandler, returnMethodCall)
 {
     gs::FunctionArgs args = list_of("x")("y")("z");
     setupFunction(args);

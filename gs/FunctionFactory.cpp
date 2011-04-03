@@ -14,7 +14,7 @@ namespace gs
 SharedIFunction FunctionFactory::createFunction(const std::string& name)
 {
     SharedIVariableTable vt(new VariableTable);
-    return SharedIFunction(new ScriptFunction(name, vt));
+    return SharedIFunction(new Function(name, vt));
 }
 
 }

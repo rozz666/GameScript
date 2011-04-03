@@ -6,13 +6,13 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#include <gs/ScriptCompilerFactory.hpp>
+#include <gs/CompilerFactory.hpp>
 #include <gs/Compiler.hpp>
 
 namespace gs
 {
 
-SharedICompiler ScriptCompilerFactory::createCompiler()
+SharedICompiler CompilerFactory::createCompiler()
 {
     SharedScriptFactory scriptFactory(new ScriptFactory);
     SharedParserFactory parserFactory(new ParserFactory);

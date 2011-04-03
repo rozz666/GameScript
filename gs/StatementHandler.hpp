@@ -6,8 +6,8 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#ifndef GS_SCRIPTSTATEMENTHANDLER_HPP
-#define GS_SCRIPTSTATEMENTHANDLER_HPP
+#ifndef GS_STATEMENTHANDLER_HPP
+#define GS_STATEMENTHANDLER_HPP
 
 #include <gs/IStatementHandler.hpp>
 #include <gs/FunctionFactory.hpp>
@@ -19,10 +19,10 @@
 namespace gs
 {
 
-class ScriptStatementHandler : public IStatementHandler
+class StatementHandler : public IStatementHandler
 {
 public:
-    ScriptStatementHandler(
+    StatementHandler(
         SharedIScript script, SharedFunctionFactory functionFactory, SharedStatementFactory statementFactory,
         SharedExpressionFactory expressionFactory)
         : script(script), functionFactory(functionFactory), statementFactory(statementFactory),
@@ -51,7 +51,7 @@ private:
     ObjectIndices findObjectIndices(const gs::FunctionArgs& args);
 };
 
-typedef boost::shared_ptr<ScriptStatementHandler> SharedScriptStatementHandler;
+typedef boost::shared_ptr<StatementHandler> SharedStatementHandler;
 
 }
-#endif /* GS_SCRIPTSTATEMENTHANDLER_HPP */
+#endif /* GS_STATEMENTHANDLER_HPP */

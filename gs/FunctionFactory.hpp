@@ -9,9 +9,9 @@
 #ifndef GS_FUNCTIONFACTORY_HPP
 #define GS_FUNCTIONFACTORY_HPP
 
-#include <gs/ScriptFunction.hpp>
-#include <boost/shared_ptr.hpp>
+#include <gs/Function.hpp>
 #include <gs/VariableTable.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace gs
 {

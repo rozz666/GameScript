@@ -6,8 +6,8 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#ifndef GS_SCRIPTFUNCTION_HPP
-#define GS_SCRIPTFUNCTION_HPP
+#ifndef GS_FUNCTION_HPP
+#define GS_FUNCTION_HPP
 
 #include <gs/IFunction.hpp>
 #include <gs/IStatement.hpp>
@@ -17,10 +17,10 @@
 namespace gs
 {
 
-class ScriptFunction : public IFunction
+class Function : public IFunction
 {
 public:
-    ScriptFunction(const std::string& name, SharedIVariableTable vt) : name_(name), vt_(vt) { }
+    Function(const std::string& name, SharedIVariableTable vt) : name_(name), vt_(vt) { }
     virtual std::string getName() const;
     virtual ObjectRef run(const CallArgs& args);
     virtual void addStatement(SharedIStatement stmt);
@@ -32,7 +32,7 @@ private:
     ObjectRef runStatements();
 };
 
-typedef boost::shared_ptr<ScriptFunction> SharedScriptFunction;
+typedef boost::shared_ptr<Function> SharedFunction;
 
 }
-#endif /* GS_SCRIPTFUNCTION_HPP */
+#endif /* GS_FUNCTION_HPP */

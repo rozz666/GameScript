@@ -6,22 +6,22 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#ifndef GS_SCRIPTCOMPILERFACTORY_HPP
-#define GS_SCRIPTCOMPILERFACTORY_HPP
+#ifndef GS_COMPILERFACTORY_HPP
+#define GS_COMPILERFACTORY_HPP
 
-#include <boost/shared_ptr.hpp>
 #include <gs/ICompiler.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace gs
 {
 
-class ScriptCompilerFactory
+class CompilerFactory
 {
 public:
     virtual SharedICompiler createCompiler();
 };
 
-typedef boost::shared_ptr<ScriptCompilerFactory> SharedScriptCompilerFactory;
+typedef boost::shared_ptr<CompilerFactory> SharedCompilerFactory;
 
 }
-#endif /* GS_SCRIPTCOMPILERFACTORY_HPP */
+#endif /* GS_COMPILERFACTORY_HPP */

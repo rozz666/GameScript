@@ -6,7 +6,7 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#include <gs/ScriptFunction.hpp>
+#include <gs/Function.hpp>
 #include <gs/test/unit/StatementMock.hpp>
 #include <gs/test/unit/VariableTableMock.hpp>
 #include <gs/test/unit/ObjectStub.hpp>
@@ -15,24 +15,24 @@
 
 using namespace testing;
 
-struct gs_ScriptFunction : testing::Test
+struct gs_Function : testing::Test
 {
     gs::CallArgs args;
     gs::SharedVariableTableMock vt;
-    gs::ScriptFunction sf;
+    gs::Function sf;
 
-    gs_ScriptFunction()
+    gs_Function()
         : vt(new gs::VariableTableMock), sf("", vt) { }
 };
 
-TEST_F(gs_ScriptFunction, name)
+TEST_F(gs_Function, name)
 {
     std::string name = "abcd";
-    gs::ScriptFunction sf(name, vt);
+    gs::Function sf(name, vt);
     ASSERT_EQ(name, sf.getName());
 }
 
-TEST_F(gs_ScriptFunction, addAndRunTwoStatements)
+TEST_F(gs_Function, addAndRunTwoStatements)
 {
     gs::SharedStatementMock st1(new gs::StatementMock);
     gs::SharedStatementMock st2(new gs::StatementMock);
@@ -48,7 +48,7 @@ TEST_F(gs_ScriptFunction, addAndRunTwoStatements)
     ASSERT_TRUE(sf.run(args) == gs::null);
 }
 
-TEST_F(gs_ScriptFunction, twoArgs)
+TEST_F(gs_Function, twoArgs)
 {
     gs::SharedStatementMock st(new gs::StatementMock);
     sf.addStatement(st);
@@ -64,7 +64,7 @@ TEST_F(gs_ScriptFunction, twoArgs)
     ASSERT_TRUE(sf.run(args) == gs::null);
 }
 
-TEST_F(gs_ScriptFunction, terminatingStatement)
+TEST_F(gs_Function, terminatingStatement)
 {
     gs::SharedStatementMock st(new gs::StatementMock);
     sf.addStatement(st);

@@ -6,7 +6,7 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#include <gs/ScriptFunction.hpp>
+#include <gs/Function.hpp>
 #include <algorithm>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
@@ -15,22 +15,22 @@
 namespace gs
 {
 
-std::string ScriptFunction::getName() const
+std::string Function::getName() const
 {
     return name_;
 }
 
-ObjectRef ScriptFunction::run(const gs::CallArgs& args)
+ObjectRef Function::run(const gs::CallArgs& args)
 {
     setArgs(args);
     return runStatements();
 }
 
-void ScriptFunction::addStatement(gs::SharedIStatement stmt)
+void Function::addStatement(gs::SharedIStatement stmt)
 {
     stmts_.push_back(stmt);
 }
-void ScriptFunction::setArgs(const gs::CallArgs& args)
+void Function::setArgs(const gs::CallArgs& args)
 {
     for (unsigned i = 0; i != args.size(); ++i)
     {
@@ -38,7 +38,7 @@ void ScriptFunction::setArgs(const gs::CallArgs& args)
     }
 }
 
-ObjectRef ScriptFunction::runStatements()
+ObjectRef Function::runStatements()
 {
     BOOST_FOREACH(gs::SharedIStatement st, stmts_)
     {

@@ -12,11 +12,11 @@
 
 using namespace testing;
 
-struct gs_ScriptVariableTable : testing::Test
+struct gs_VariableTable : testing::Test
 {
 };
 
-TEST_F(gs_ScriptVariableTable, testGetSet)
+TEST_F(gs_VariableTable, testGetSet)
 {
     gs::VariableTable vt;
     gs::ObjectRef obj1(new gs::ObjectStub);

@@ -8,7 +8,7 @@
 //
 #include <gs/ParserFactory.hpp>
 #include <gs/Parser.hpp>
-#include <gs/ScriptStatementHandler.hpp>
+#include <gs/StatementHandler.hpp>
 
 namespace gs
 {
@@ -18,7 +18,7 @@ SharedIParser ParserFactory::createParser(SharedIScript script)
     SharedFunctionFactory functionFactory(new FunctionFactory);
     SharedStatementFactory stmtFactory(new StatementFactory);
     SharedExpressionFactory exprFactory(new ExpressionFactory);
-    SharedIStatementHandler stmtHandler(new ScriptStatementHandler(script, functionFactory, stmtFactory, exprFactory));
+    SharedIStatementHandler stmtHandler(new StatementHandler(script, functionFactory, stmtFactory, exprFactory));
     return SharedIParser(new Parser(stmtHandler));
 }
 
